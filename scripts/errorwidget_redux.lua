@@ -13,12 +13,11 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         local Widget = require "widgets/widget"
         local TEMPLATES = require "widgets/redux/templates"
         local NineSlice = require "widgets/nineslice"
-        local PopupDialogScreenRedux = require "screens/redux/popupdialog"
 
         self.root:SetScaleMode(SCALEMODE_NONE)
 
 
-        self.black:SetTint(0, 0, 0, 0.75)
+        self.black:SetTint(0,0,0, 0.75)
         -- local title = "Error in the Constant"
 
         self.title:SetFont(HEADERFONT)
@@ -76,8 +75,9 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
             {
                 text = InGamePlay() and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RETUERNTOMENU or
-                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.GAMERELOAD,
+                STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.GAMERELOAD,
                 cb = function()
+
                     if InGamePlay() then
                         TheNet:Disconnect(true) -- The game seems to have issues if we don't manually disconnect
                     end
@@ -89,14 +89,14 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
         }
         if ThePlayer and ThePlayer.Network:IsServerAdmin() and not (TheNet:GetServerIsClientHosted() and TheNet:GetIsHosting()) then
-            table.insert(buttons,
-                {
-                    text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
-                    cb = function()
-                        TheSim:ResetError()
-                        c_reset()
-                    end
-                })
+        table.insert(buttons,
+            {
+                text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
+                cb = function()
+                    TheSim:ResetError()
+                    c_reset()
+                end
+            })
         end
         --[[     table.insert(buttons, 1,
     {
@@ -106,29 +106,29 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         end
     }) ]]
         if ThePlayer and TheWorld and InGamePlay() and not TheNet:GetServerIsClientHosted() then
-            table.insert(buttons,
-                {
-                    text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RECONNECT,
-                    cb = function()
-                        local listing = TheNet:GetServerListing()
+        table.insert(buttons,
+            {
+                text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RECONNECT,
+                cb = function()
+                    local listing = TheNet:GetServerListing()
 
-                        local locationData = { bettercrashscr_cached_server = listing }
-                        local jsonString = json.encode(locationData)
-                        TheSim:SetPersistentString("BetterCrashScreen", jsonString, false)
+                    local locationData = { bettercrashscr_cached_server = listing }
+                    local jsonString = json.encode(locationData)
+                    TheSim:SetPersistentString("BetterCrashScreen", jsonString, false)
 
-                        TheNet:Disconnect(true)
+                    TheNet:Disconnect(true)
 
-                        TheSim:ResetError()
-                        SimReset()
-                    end
-                })
+                    TheSim:ResetError()
+                    SimReset()
+                end
+            })
         end
 
         self.title_shadow = self.root:AddChild(Text(HEADERFONT, 50))
         self.title_shadow:SetPosition(0, 252, 0)
         self.title_shadow:SetColour(0, 0, 0, 1)
         self.title_shadow:SetString(title)
-        
+        self.title:MoveToFront()
         self.title:SetSize(50)
 
         self.menu_new = self.root:AddChild(Menu(buttons, 385, true, nil, true))
@@ -167,12 +167,20 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         self.additionaltext:SetSize(23)
         self.additionaltext:SetPosition(0, -125, 0)
 
-
-
+        --Client log location button
+        self.documentsbutton = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "folder.tex", STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.CLIENTLOG_LOC, false, true, function() TheSim:OpenDocumentsFolder() end, {font=HEADERFONT}))
+        self.documentsbutton:SetPosition(-450,250)
+        self.documentsbutton:SetTextSize(22)
+        self.documentsbutton.text:SetPosition(125,0)
+        self.documentsbutton.text_shadow:SetPosition(115,0)
+        ----------------------------------------------------
 
 
 
         
+        self.documentsbutton:SetTextColour(255,255,255, 1)
+
+        self.additionaltext:MoveToFront()
 
         self.text_shadow:SetFont(HEADERFONT)
 
@@ -182,10 +190,8 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
             self.text_shadow:SetHAlign(texthalign)
         end
 
-        self.additionaltext:MoveToFront()
         self.text:MoveToFront()
 
-        self.title:MoveToFront()
         self.menu:MoveToFront()
 
         self.menu:SetPosition(0, -195, 0)
@@ -216,7 +222,6 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 "button_carny_xlong_disabled.tex", nil, nil, { 0.75, 0.85 })
             v:SetScale(0.72)
         end
-        local scale = env.GetModConfigData("reduxscale") or 1.08
 
-        self.root:SetScale(scale)
+        self.root:SetScale(1.08)
     end)

@@ -5,8 +5,6 @@ if GetModConfigData("ReduxCrashScreen") ~= "redux" then
 else
     modimport("scripts/errorwidget_redux")
 end
-modimport("scripts/logrelated_buttons")
-
 
 local env = env
 GLOBAL.setfenv(1, GLOBAL)

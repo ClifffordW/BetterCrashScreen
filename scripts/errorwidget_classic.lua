@@ -2,7 +2,6 @@ local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
 
-
 env.AddClassPostConstruct("widgets/scripterrorwidget",
     function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, ...)
         local Menu = require "widgets/menu"
@@ -12,29 +11,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         local Image = require "widgets/image"
         local UIAnim = require "widgets/uianim"
         local Widget = require "widgets/widget"
-        local TEMPLATES = require "widgets/templates"
-
-        local has_classicframe = env.GetModConfigData("ClassicFrame")
-
-        local STYLES =
-        {
-
-            dark = {
-                bgconstructor = function(root)
-                    local bg = root:AddChild(Image("images/fepanels.xml", "wideframe.tex"))
-                    bg:SetScale(0.70, 0.70)
-                    bg:SetPosition(0, 10)
-                    return bg
-                end,
-                title = { font = TITLEFONT, size = 50, colour = { 1, 1, 1, 1 } },
-                text = { font = NEWFONT_OUTLINE, size = 28, colour = { 1, 1, 1, 1 } },
-            },
-        }
-
-
-        self.style = "dark"
-        assert(STYLES[self.style])
-
+        local TEMPLATES_OLD = require "widgets/templates"
 
 
 
@@ -42,8 +19,9 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         {
             {
                 text = InGamePlay() and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RETURNTOMENU or
-                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.GAMERELOAD,
+                STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.GAMERELOAD,
                 cb = function()
+
                     if InGamePlay() then
                         TheNet:Disconnect(true) -- The game seems to have issues if we don't manually disconnect
                     end
@@ -53,14 +31,14 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
             },
         }
         if ThePlayer and ThePlayer.Network:IsServerAdmin() and not (TheNet:GetServerIsClientHosted() and TheNet:GetIsHosting()) then -- If the server is client hosted then the game has trouble reloading.
-            table.insert(buttons,
-                {
-                    text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
-                    cb = function()
-                        TheSim:ResetError()
-                        c_reset()
-                    end
-                })
+        table.insert(buttons,
+            {
+                text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
+                cb = function()
+                    TheSim:ResetError()
+                    c_reset()
+                end
+            })
         end
         --[[     table.insert(buttons, 1,
     {
@@ -70,44 +48,37 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         end
     }) ]]
         if ThePlayer and TheWorld and InGamePlay() and not TheNet:GetServerIsClientHosted() then
-            table.insert(buttons,
-                {
-                    text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RECONNECT,
-                    cb = function()
-                        local listing = TheNet:GetServerListing()
+        table.insert(buttons,
+            {
+                text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RECONNECT,
+                cb = function()
+                    local listing = TheNet:GetServerListing()
 
-                        local locationData = { bettercrashscr_cached_server = listing }
-                        local jsonString = json.encode(locationData)
-                        TheSim:SetPersistentString("BetterCrashScreen", jsonString, false)
+                    local locationData = { bettercrashscr_cached_server = listing }
+                    local jsonString = json.encode(locationData)
+                    TheSim:SetPersistentString("BetterCrashScreen", jsonString, false)
 
-                        TheNet:Disconnect(true)
+                    TheNet:Disconnect(true)
 
-                        TheSim:ResetError()
-                        SimReset()
-                    end
-                })
+                    TheSim:ResetError()
+                    SimReset()
+                end
+            })
         end
 
 
+        --Client log location button
+        self.documentsbutton = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "folder.tex", STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.CLIENTLOG_LOC, false, true, function() TheSim:OpenDocumentsFolder() end, {font=NEWFONT}))
+        self.documentsbutton:SetPosition(-450,250)
+        self.documentsbutton:SetTextSize(22)
+        self.documentsbutton.text:SetPosition(115,0)
+        self.documentsbutton.text_shadow:SetPosition(125,0)
+        self.documentsbutton.icon:SetScale(0.15)
 
-
-
-
-        if has_classicframe then
-            self.bg = STYLES[self.style].bgconstructor(self.root)
-            self.bg:SetScale(1.25, 1.25)
-
-            self.additionaltext:MoveToFront()
-            self.text:MoveToFront()
-
-            self.title:MoveToFront()
-            self.menu:MoveToFront()
-            self.black:SetTint(0, 0, 0, 0.75)
-        end
+        ----------------------------------------------------
 
         self.menu_new = self.root:AddChild(Menu(buttons, 385, true, nil, true))
         self.menu_new:SetHRegPoint(ANCHOR_MIDDLE)
         self.menu_new:SetPosition(0, -315, 0)
         self.menu_new:SetScale(0.63)
-
     end)
