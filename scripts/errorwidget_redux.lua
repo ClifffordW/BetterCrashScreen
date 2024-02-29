@@ -128,7 +128,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         self.title_shadow:SetPosition(0, 252, 0)
         self.title_shadow:SetColour(0, 0, 0, 1)
         self.title_shadow:SetString(title)
-        self.title:MoveToFront()
+        
         self.title:SetSize(50)
 
         self.menu_new = self.root:AddChild(Menu(buttons, 385, true, nil, true))
@@ -172,7 +172,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-        self.additionaltext:MoveToFront()
+        
 
         self.text_shadow:SetFont(HEADERFONT)
 
@@ -182,8 +182,10 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
             self.text_shadow:SetHAlign(texthalign)
         end
 
+        self.additionaltext:MoveToFront()
         self.text:MoveToFront()
 
+        self.title:MoveToFront()
         self.menu:MoveToFront()
 
         self.menu:SetPosition(0, -195, 0)
@@ -214,6 +216,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 "button_carny_xlong_disabled.tex", nil, nil, { 0.75, 0.85 })
             v:SetScale(0.72)
         end
+        local scale = env.GetModConfigData("reduxscale") or 1.08
 
-        self.root:SetScale(1.08)
+        self.root:SetScale(scale)
     end)

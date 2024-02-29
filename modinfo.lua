@@ -75,7 +75,42 @@ configuration_options = {
 
     },
 
-    Title("Buttons", "Pick what mini buttons you want"),
+    {
+        name = "ClassicFrame",
+        label = "Classic with Frame",
+        hover = "Adds Frame to Classic crash screen",
+        options =
+        {
+            { description = "Enabled", data = true},
+            { description = "Disabled",  data = false},
+
+        },
+        default = false
+
+    },
+
+    {
+        name = "reduxscale",
+        label = "Modern Crashscreen Scale",
+        hover = "",
+        options =
+        {
+            { description = "Default", data = 1.08},
+            { description = "1.15", data = 1.15},
+            { description = "1.25", data = 1.25},
+            { description = "1.5", data = 1.5},
+
+        },
+        default = 1.08
+
+    },
+
+
+
+
+
+
+    Title("Top Buttons", "Pick what mini buttons you want"),
 
     {
         name = "SaveLog",
@@ -92,7 +127,7 @@ configuration_options = {
 
     {
         name = "DocumentsButton",
-        label = "Open Clientlog Folder Button",
+        label = "Clientlog Folder Button",
         hover = "Opens your DST documents folder. \nGo back by one folder to find client log",
         options =
         {
@@ -101,6 +136,33 @@ configuration_options = {
 
         },
         default = 1
+    },
+
+
+    {
+        name = "CombinedButtons",
+        label = "Combined Buttons",
+        hover = "Combines both buttons \nThis hides the text!",
+        options =
+        {
+            { description = "Enabled",  data = true },
+            { description = "Disabled", data = false },
+
+        },
+        default = false
+    },
+
+    {
+        name = "ButtonsCloserToLog",
+        label = "Closer Buttons",
+        hover = "Puts the small buttons closer to the log \nOnly when combined!",
+        options =
+        {
+            { description = "Enabled",  data = true },
+            { description = "Disabled", data = false },
+
+        },
+        default = true
     },
 
 
