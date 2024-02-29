@@ -2,7 +2,7 @@
 name = "Better Crash Screen"
 description = ""
 author = "Niko"
-version = "0.32" -- This is the version of the template. Change it to your own number.
+version = "0.33" -- This is the version of the template. Change it to your own number.
 
 -- This lets other players know if your mod is out of date, update it to match the current version in the game
 api_version = 10
