@@ -67,8 +67,8 @@ configuration_options = {
         hover = "",
         options =
         {
-            { description = "Classic", data = "classic" },
-            { description = "Modern",  data = "redux" },
+            { description = "Classic", data = "classic", hover="Pre-Forge Look"},
+            { description = "Modern",  data = "redux", hover="Post-Forge Look (Redux)"},
 
         },
         default = "classic"
@@ -80,7 +80,7 @@ configuration_options = {
     {
         name = "SaveLog",
         label = "Save Log Button",
-        hover = "",
+        hover = "Saves log into DST's data folder",
         options =
         {
             { description = "Enabled",  data = 1 },
@@ -93,7 +93,7 @@ configuration_options = {
     {
         name = "DocumentsButton",
         label = "Open Clientlog Folder Button",
-        hover = "",
+        hover = "Opens your DST documents folder. \nGo back by one folder to find client log",
         options =
         {
             { description = "Enabled",  data = 1 },
