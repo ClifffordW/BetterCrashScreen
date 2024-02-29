@@ -9,11 +9,11 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
     RETURNTOMENU = "Return To Menu",
     GAMERELOAD = "Reload Game",
     RECONNECT = "Reconnect",
-    CLIENTLOG_LOC = "Clientlog Location\n (Go up by one folder)",
+    CLIENTLOG_LOC = "Clientlog Location\n(Go up by one folder)",
 
 
 
-    SAVEQUICKLOG = "Save Quick Log\n (Saves in DST's Data folder)",
+    SAVEQUICKLOG = "Save Quick Log\n(Saves in DST's Data folder)",
     SAVEDQUICKLOG = "Quicklog has been created in DST's data folder",
 
 

@@ -20,9 +20,12 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                     function() TheSim:OpenDocumentsFolder() end, { font = BODYTEXTFONT }))
                 self.documentsbutton:SetPosition(-450, 275)
                 self.documentsbutton:SetTextSize(22)
-                self.documentsbutton.text:SetPosition(150, 0)
-                self.documentsbutton.text_shadow:SetPosition(152, 0)
+                self.documentsbutton.text:SetPosition(100, 0)
+                self.documentsbutton.text_shadow:SetPosition(102, 0)
                 self.documentsbutton:SetScale(0.89)
+                self.documentsbutton.text:SetHAlign(ANCHOR_LEFT)
+                self.documentsbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
+
 
                 self.documentsbutton:SetTextColour(255, 255, 255, 1)
             end
@@ -55,10 +58,14 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                     { font = BODYTEXTFONT }))
                 self.createquick_log:SetPosition(-450, 220)
                 self.createquick_log:SetTextSize(22)
-                self.createquick_log.text:SetPosition(150, 0)
-                self.createquick_log.text_shadow:SetPosition(152, 0)
+                self.createquick_log.text:SetPosition(122, 0)
+                self.createquick_log.text_shadow:SetPosition(122 + 2, 0)
 
                 self.createquick_log:SetScale(0.89)
+                self.createquick_log.text:SetHAlign(ANCHOR_LEFT)
+                self.createquick_log.text_shadow:SetHAlign(ANCHOR_LEFT)
+
+
 
                 self.createquick_log:SetTextColour(255, 255, 255, 1)
             end
@@ -74,10 +81,13 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                     function() TheSim:OpenDocumentsFolder() end, { font = HEADERFONT }))
                 self.documentsbutton:SetPosition(-450, 275)
                 self.documentsbutton:SetTextSize(22)
-                self.documentsbutton.text:SetPosition(150, 0)
-                self.documentsbutton.text_shadow:SetPosition(152, 0)
+                self.documentsbutton.text:SetPosition(122, 0)
+                self.documentsbutton.text_shadow:SetPosition(122 + 2, 0)
                 self.documentsbutton:SetTextColour(255, 255, 255, 1)
                 self.documentsbutton:SetScale(0.89)
+
+                self.documentsbutton.text:SetHAlign(ANCHOR_LEFT)
+                self.documentsbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
             end
             ----------------------------------------------------
 
@@ -103,9 +113,11 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                     { font = HEADERFONT }))
                 self.createquick_log:SetPosition(-450, 220)
                 self.createquick_log:SetTextSize(22)
-                self.createquick_log.text:SetPosition(150, 0)
-                self.createquick_log.text_shadow:SetPosition(152, 0)
+                self.createquick_log.text:SetPosition(152, 0)
+                self.createquick_log.text_shadow:SetPosition(152 + 2, 0)
 
+                self.createquick_log.text:SetHAlign(ANCHOR_LEFT)
+                self.createquick_log.text_shadow:SetHAlign(ANCHOR_LEFT)
                 self.createquick_log:SetScale(0.89)
 
                 self.createquick_log:SetTextColour(255, 255, 255, 1)
