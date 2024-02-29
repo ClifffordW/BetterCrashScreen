@@ -11,6 +11,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
         if env.GetModConfigData("ReduxCrashScreen") ~= "redux" then
+            
             if env.GetModConfigData("DocumentsButton") == 1 then
                 --Client log location button
                 self.documentsbutton = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons2.xml",
@@ -48,6 +49,8 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 self.createquick_log = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CreateTextFileCommand(text)
+                        self.text:SetString(text.."\nQuicklog has been saved to Don't Starve Together's data folder.")
+
                     end,
                     { font = BODYTEXTFONT }))
                 self.createquick_log:SetPosition(-450, 220)
@@ -95,6 +98,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 self.createquick_log = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CreateTextFileCommand(text)
+                        self.text:SetString(text.."\nQuicklog has been saved to Don't Starve Together's data folder.")
                     end,
                     { font = HEADERFONT }))
                 self.createquick_log:SetPosition(-450, 220)
