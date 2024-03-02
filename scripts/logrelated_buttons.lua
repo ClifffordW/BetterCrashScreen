@@ -36,7 +36,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-            function CreateTextFileCommand(text)
+            function CW_CreateTextFileCommand(text)
                 local modname = KnownModIndex:GetModFancyName(env.modname)
                 local filename = string.lower(string.gsub(modname, " ", "")) .. "_quicklog.txt"
 
@@ -51,7 +51,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
             if env.GetModConfigData("SaveLog") == 1 then
                 self.createquick_log = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
-                        CreateTextFileCommand(text)
+                        CW_CreateTextFileCommand(text)
                         self.text:SetString(text.."\nQuicklog has been saved to Don't Starve Together's data folder.")
 
                     end,
