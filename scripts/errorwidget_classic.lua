@@ -2,6 +2,8 @@ local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
 
+local sel_font =  type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or BODYTEXTFONT
+
 
 env.AddClassPostConstruct("widgets/scripterrorwidget",
     function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, ...)
@@ -92,10 +94,9 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-
         if has_classicframe then
-            self.bg = STYLES[self.style].bgconstructor(self.root)
-            self.bg:SetScale(1.25, 1.25)
+            self.classic_frame = STYLES[self.style].bgconstructor(self.root)
+            self.classic_frame:SetScale(1.25, 1.25)
 
             self.additionaltext:MoveToFront()
             self.text:MoveToFront()
@@ -109,5 +110,9 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         self.menu_new:SetHRegPoint(ANCHOR_MIDDLE)
         self.menu_new:SetPosition(0, -315, 0)
         self.menu_new:SetScale(0.63)
+
+        self.additionaltext:SetFont(sel_font)
+        self.text:SetFont(sel_font)
+        self.title:SetFont( type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or BODYTEXTFONT)
 
     end)

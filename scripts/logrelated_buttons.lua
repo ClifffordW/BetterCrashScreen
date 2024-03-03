@@ -1,8 +1,14 @@
 local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
+local sel_font =  type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or BODYTEXTFONT
+
+
 env.AddClassPostConstruct("widgets/scripterrorwidget",
     function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, ...)
+
+
+
         local TEMPLATES_OLD, TEMPLATES = require "widgets/templates", require "widgets/redux/templates"
         local is_combined, closerto_log = env.GetModConfigData("CombinedButtons"), env.GetModConfigData("ButtonsCloserToLog")
         local button_y = closerto_log and 185 or 275
@@ -17,11 +23,11 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 self.documentsbutton = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons2.xml",
                     "local_filter.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.CLIENTLOG_LOC, false, true,
-                    function() TheSim:OpenDocumentsFolder() end, { font = BODYTEXTFONT }))
+                    function() TheSim:OpenDocumentsFolder() end, { font = sel_font }))
                 self.documentsbutton:SetPosition(-450, 275)
                 self.documentsbutton:SetTextSize(22)
-                self.documentsbutton.text:SetPosition(100, 0)
-                self.documentsbutton.text_shadow:SetPosition(102, 0)
+                self.documentsbutton.text:SetPosition(122, 0)
+                self.documentsbutton.text_shadow:SetPosition(122+2, 0)
                 self.documentsbutton:SetScale(0.89)
                 self.documentsbutton.text:SetHAlign(ANCHOR_LEFT)
                 self.documentsbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
@@ -36,7 +42,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-            function CreateTextFileCommand(text)
+            local function CW_CreateTextFileCommand(text)
                 local modname = KnownModIndex:GetModFancyName(env.modname)
                 local filename = string.lower(string.gsub(modname, " ", "")) .. "_quicklog.txt"
 
@@ -46,20 +52,21 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                     file:close()
                 end
             end
+            global"CW_CreateTextFileCommand"
 
             --Client log location button
             if env.GetModConfigData("SaveLog") == 1 then
                 self.createquick_log = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
-                        CreateTextFileCommand(text)
+                        CW_CreateTextFileCommand(text)
                         self.text:SetString(text.."\nQuicklog has been saved to Don't Starve Together's data folder.")
 
                     end,
-                    { font = BODYTEXTFONT }))
+                    { font = sel_font }))
                 self.createquick_log:SetPosition(-450, 220)
                 self.createquick_log:SetTextSize(22)
-                self.createquick_log.text:SetPosition(122, 0)
-                self.createquick_log.text_shadow:SetPosition(122 + 2, 0)
+                self.createquick_log.text:SetPosition(152, 0)
+                self.createquick_log.text_shadow:SetPosition(152 + 2, 0)
 
                 self.createquick_log:SetScale(0.89)
                 self.createquick_log.text:SetHAlign(ANCHOR_LEFT)
@@ -72,13 +79,14 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
             ----------------------------------------------------
         else
+
             --Client log location button
 
             if env.GetModConfigData("DocumentsButton") == 1 then
                 self.documentsbutton = self.root:AddChild(TEMPLATES.IconButton("images/button_icons2.xml",
                     "local_filter.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.CLIENTLOG_LOC, false, true,
-                    function() TheSim:OpenDocumentsFolder() end, { font = HEADERFONT }))
+                    function() TheSim:OpenDocumentsFolder() end, { font = sel_font }))
                 self.documentsbutton:SetPosition(-450, 275)
                 self.documentsbutton:SetTextSize(22)
                 self.documentsbutton.text:SetPosition(122, 0)
@@ -93,7 +101,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-            function CreateTextFileCommand(text)
+            local function CW_CreateTextFileCommand(text)
                 local modname = KnownModIndex:GetModFancyName(env.modname)
                 local filename = string.lower(string.gsub(modname, " ", "")) .. "_quicklog.txt"
 
@@ -107,10 +115,10 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
             if env.GetModConfigData("SaveLog") == 1 then
                 self.createquick_log = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
-                        CreateTextFileCommand(text)
+                        CW_CreateTextFileCommand(text)
                         self.text:SetString(text.."\nQuicklog has been saved to Don't Starve Together's data folder.")
                     end,
-                    { font = HEADERFONT }))
+                    { font = sel_font }))
                 self.createquick_log:SetPosition(-450, 220)
                 self.createquick_log:SetTextSize(22)
                 self.createquick_log.text:SetPosition(152, 0)

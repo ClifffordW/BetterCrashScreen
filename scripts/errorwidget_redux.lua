@@ -1,6 +1,7 @@
 local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
+local sel_font =  type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or HEADERFONT
 
 env.AddClassPostConstruct("widgets/scripterrorwidget",
     function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, ...)
@@ -21,7 +22,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         self.black:SetTint(0, 0, 0, 0.75)
         -- local title = "Error in the Constant"
 
-        self.title:SetFont(HEADERFONT)
+        self.title:SetFont(sel_font)
         self.title:SetString(title)
         self.title:SetRegionSize(480 * 2, 200)
         self.title:SetPosition(0, 250, 0)
@@ -39,6 +40,8 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
         self.frame = self.root:AddChild(NineSlice("images/dialogcurly_9slice.xml"))
+
+
 
         local top = self.frame:AddCrown("crown-top-fg.tex", ANCHOR_MIDDLE, ANCHOR_TOP, 0, 68)
         local top_bg = self.frame:AddCrown("crown-top.tex", ANCHOR_MIDDLE, ANCHOR_TOP, 0, 44)
@@ -124,7 +127,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 })
         end
 
-        self.title_shadow = self.root:AddChild(Text(HEADERFONT, 50))
+        self.title_shadow = self.root:AddChild(Text(sel_font, 50))
         self.title_shadow:SetPosition(0, 252, 0)
         self.title_shadow:SetColour(0, 0, 0, 1)
         self.title_shadow:SetString(title)
@@ -140,21 +143,25 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         local textsize = textsize or 24
 
         self.text:SetSize(textsize)
-        self.text:SetFont(HEADERFONT)
-        self.text_shadow = self.root:AddChild(Text(HEADERFONT, 26))
+        self.text:SetFont(sel_font)
+        self.text_shadow = self.root:AddChild(Text(sel_font, textsize))
         self.text_shadow:SetPosition(2, 50, 0)
         self.text:SetPosition(0, 50, 0)
+
+
 
         self.text_shadow:SetColour(0, 0, 0, 1)
         self.text_shadow:SetString(text)
         self.text_shadow:SetRegionSize(480 * 2, 200)
         self.text_shadow:EnableWordWrap(true)
+        self.text_shadow:SetPosition(2, 50, 0)
 
 
-        self.additionaltext:SetFont(HEADERFONT)
+
+        self.additionaltext:SetFont(sel_font)
 
 
-        self.additionaltext_shadow = self.root:AddChild(Text(HEADERFONT, 23))
+        self.additionaltext_shadow = self.root:AddChild(Text(sel_font, 23))
         self.additionaltext_shadow:SetPosition(2, -125, 0)
         self.additionaltext_shadow:SetVAlign(ANCHOR_TOP)
 
@@ -174,7 +181,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
         
 
-        self.text_shadow:SetFont(HEADERFONT)
+        self.text_shadow:SetFont(sel_font)
 
         self.text_shadow:SetVAlign(ANCHOR_TOP)
 
@@ -216,7 +223,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 "button_carny_xlong_disabled.tex", nil, nil, { 0.75, 0.85 })
             v:SetScale(0.72)
         end
-        local scale = env.GetModConfigData("reduxscale") or 1.08
+        local scale = env.GetModConfigData("nostalgia") ~= 1 and  env.GetModConfigData("reduxscale") or 1.08
 
         self.root:SetScale(scale)
     end)

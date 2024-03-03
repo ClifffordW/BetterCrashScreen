@@ -1,32 +1,63 @@
--- This information tells other players more about the mod
-name = "Better Crash Screen"
-description = ""
-author = "Niko"
-version = "0.33" -- This is the version of the template. Change it to your own number.
 
--- This lets other players know if your mod is out of date, update it to match the current version in the game
+
+
+--Beta, Final, or leave for no name
+versiontype = ""
+name = "Better Crash Screen"
+
+
+author = "Niko"
+
+
+
+version = "0.3.5"
+
+
+
+
+config = true
+Language = "en"
+
+
+
+contributors = "Cliffford W."
+write_contributors = true
+credits_only = false
+
+
+
+main_icon = "bettercs"
+
+
+priority = 9
+
+
+
+
+
 api_version = 10
 
--- Compatible with Don't Starve Together
 dst_compatible = true
-
--- Not compatible with Don't Starve
 dont_starve_compatible = false
 reign_of_giants_compatible = false
 shipwrecked_compatible = false
 
--- Character mods are required by all clients
+
+
+
+
 all_clients_require_mod = false
+client_only_mod = true 
+server_only_mod = false
 
-client_only_mod = true
 
-icon_atlas = "modicon.xml"
-icon = "modicon.tex"
 
--- The mod's tags displayed on the server list
-server_filter_tags = {
-    "",
-}
+
+
+
+
+
+
 
 local scales = {
 }
@@ -56,11 +87,19 @@ end
 
 local SEPARATOR = Title("")
 
-configuration_options = {
 
 
 
-    Title("Crashscreen", "General Crashscreen Settings"),
+
+modinfo_ver = "2.0"
+if config == true then
+
+
+	--Config
+	configuration_options =
+	{
+		
+		Title("Crashscreen", "General Crashscreen Settings"),
     {
         name = "ReduxCrashScreen",
         label = "Crash Screen Style",
@@ -105,6 +144,46 @@ configuration_options = {
 
     },
 
+    {
+        name = "font",
+        label = "Font Override",
+        hover = "This does not apply  to the bottom buttons",
+        options =
+        {
+            { description = "Default", data = 0},
+--[[             { description = "Default Crash Screen Font", data = "NEWFONT"}, -- Scrapped
+            { description = "Hammerhead", data = "HEADERFONT"}, ]]
+            { description = "Talking font", data = "TALKINGFONT"},
+            { description = "Wormwood's font", data = "TALKINGFONT_WORMWOOD"},
+            { description = "Tradein guy font", data = "TALKINGFONT_TRADEIN"},
+            { description = "Hermit's font", data = "TALKINGFONT_HERMIT"},
+            { description = "PT Mono", data = "PTMONO"},
+            { description = "Wildcard", data = "BETTERCRASHSCREEN_FONT_WILDCARD"},
+
+
+
+
+
+
+
+        },
+        default = 0
+
+    },
+
+
+    {
+        name = "nostalgia",
+        label = "Nostalgia",
+        hover = "",
+        options =
+        {
+            { description = "Enabled",  data = 1 },
+            { description = "Disabled", data = 0 },
+
+        },
+        default = 0
+    },
 
 
 
@@ -168,4 +247,121 @@ configuration_options = {
 
 
 
+			Title("󰀔 Mod Version"..":".." "..version),
+			Title("󰀩 Modinfo Version:".." "..modinfo_ver)
+				
+	}
+		
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+icon_atlas = main_icon..".xml"
+icon = main_icon..".tex"
+
+
+
+
+
+
+versiontypes = {
+    final = "[Final]",
+    beta = "[Beta]",
+    disc = "[Discontinued]",
+    redux = "[Redux]",
 }
+versiontype = versiontypes[versiontype] or ""
+
+modinfo_ver = modinfo_ver
+
+
+
+if  versiontype == ""  then
+	name = name
+else
+	name = name.." \n"..versiontype..""
+end
+
+
+old_author = author
+if contributors == "" or  contributors == nil  then 
+	author = author
+
+elseif write_contributors == true then
+	author = author.." and ".." "..contributors
+end
+
+
+
+
+
+
+if Language == "en" or Language == nil or Language == "" then
+	--Description Components
+	desc = [[
+Improves the crash screen to give more detailed information and makes it easier to understand.]]
+	
+    
+    
+    changelog= [[󰀏 What's New:
+
+    󰀈 Added Nostalgia mod config and fixed misaligned text
+
+
+    
+]]
+	
+
+
+
+
+	--copyright = "Copyright © 2020 "..old_author
+	credits = "󰀭 Credits:".." "..contributors
+	mark2 = "󰀩 Modinfo Version:".." "..modinfo_ver
+
+
+end
+
+
+
+
+if write_contributors == true or credits_only == true and contributors ~= ""  then
+	descfill = desc.."\n\n󰀝 Mod Version: "..version.."\n"..changelog.."\n\n"..credits.."\n\n"..mark2
+elseif write_contributors == false or write_contributors == nil or credits_only == false or credits_only == nil and contributors == nil or contributors == "" then
+	descfill = desc.."\n\n"..changelog.."\n 󰀝  Version:".." "..version.."\n\n"..mark2
+end
+
+
+description = descfill
+description = description

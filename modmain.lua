@@ -1,4 +1,20 @@
+
+
+
+
+
+GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD = "bettercrashscreen_font_wildcard"
+
+table.insert(GLOBAL.FONTS, 	{ filename = GLOBAL.resolvefilepath("fonts/crashfont_wildcard.zip"), alias = GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD, fallback = GLOBAL.DEFAULT_FALLBACK_TABLE_OUTLINE })
+
+print("FONT IS "..GetModConfigData("font"))
+
+
+
 modimport("scripts/strings")
+
+
+
 modimport("scripts/autoreconnect")
 if GetModConfigData("ReduxCrashScreen") ~= "redux" then
     modimport("scripts/errorwidget_classic")
@@ -7,15 +23,30 @@ else
 end
 modimport("scripts/logrelated_buttons")
 
+modimport("scripts/smallbonus")
 
 local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
 
 
+
+
+
+
 DisplayError = function(error)
+
+
     SetPause(true,"DisplayError")
+
+    
+
+
+
+
     if global_error_widget ~= nil then
+       
+
         return nil
     end
 
@@ -26,6 +57,12 @@ DisplayError = function(error)
     local errorheading = string.sub(error, 0, string.find(error, "\n") -1)
 
     local modnames = ModManager:GetEnabledModNames()
+
+
+
+
+
+    
 
     local modnamesstr = ""
     local involvedmodnamesstr = ""
