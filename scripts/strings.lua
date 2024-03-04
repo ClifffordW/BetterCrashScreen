@@ -17,6 +17,8 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
     SAVEDQUICKLOG = "Quicklog has been created in DST's data folder",
 
 
+    MODPAGE = "Workshop Page",
+
     
 
 }

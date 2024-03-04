@@ -70,6 +70,7 @@ DisplayError = function(error)
     local maincausemodnamestr = ""
     local maincause = nil
     local othercausesmodnamesstr = ""
+    local modnameforurl
     local othercauses = {}
     for k,modname in ipairs(modnames) do
         local patternmodname = string.gsub(modname, "%-", "%%-")
@@ -87,6 +88,8 @@ DisplayError = function(error)
             end
         end
         modnamesstr = modnamesstr.."\""..KnownModIndex:GetModFancyName(modname).."\" "
+
+        modnameforurl = string.gsub(KnownModIndex:GetModActualName(KnownModIndex:GetModFancyName(modname)), "workshop%-", "")
     end
 
     -- print("involvedmods", #involvedmods)
@@ -107,6 +110,9 @@ DisplayError = function(error)
                 end
 
             else -- On it's own
+
+
+
 
                 disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODONEQUIT -- Disable Mod
                 disablemodsbuttonfn = function()
@@ -153,7 +159,9 @@ DisplayError = function(error)
 
         table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.SCRIPTERRORQUIT, cb = function() TheSim:ForceAbort() end})
 
+
         -- if not ingame then
+
             table.insert(buttons, {text=disablemodsbuttonstr, cb = function() -- Annoying that cb has no arguments, I would love to change the button's text when clicked.
                 
                 disablemodsbuttonfn()
@@ -167,7 +175,14 @@ DisplayError = function(error)
             end})
         -- end
 
-        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.MODFORUMS, nopop=true, cb = function() VisitURL("http://forums.kleientertainment.com/forum/79-dont-starve-together-beta-mods-and-tools/") end })
+        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
+
+
+
+        
+
+    
+        
     end
 
     local titlestr = (maincause ~= nil and #involvedmods > 0) and
