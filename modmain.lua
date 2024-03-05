@@ -70,7 +70,7 @@ DisplayError = function(error)
     local maincausemodnamestr = ""
     local maincause = nil
     local othercausesmodnamesstr = ""
-    local modnameforurl
+    local modnameforurl = nil
     local othercauses = {}
     for k,modname in ipairs(modnames) do
         local patternmodname = string.gsub(modname, "%-", "%%-")
@@ -81,6 +81,8 @@ DisplayError = function(error)
 
             if maincause == nil and string.find(errorheading, "/"..patternmodname.."/") ~= nil then
                 maincause = modname
+                modnameforurl = string.gsub(KnownModIndex:GetModActualName(KnownModIndex:GetModFancyName(modname)), "workshop%-", "")
+
                 maincausemodnamestr = "\""..KnownModIndex:GetModFancyName(modname).."\" "
             else
                 table.insert(othercauses, modname)
@@ -89,7 +91,6 @@ DisplayError = function(error)
         end
         modnamesstr = modnamesstr.."\""..KnownModIndex:GetModFancyName(modname).."\" "
 
-        modnameforurl = string.gsub(KnownModIndex:GetModActualName(KnownModIndex:GetModFancyName(modname)), "workshop%-", "")
     end
 
     -- print("involvedmods", #involvedmods)
@@ -174,14 +175,20 @@ DisplayError = function(error)
 
             end})
         -- end
+        if modnameforurl then
+            BETTERCRASHSCREEN_CAUSE = modnameforurl
+            print("CAUSE IS "..BETTERCRASHSCREEN_CAUSE)
+            table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
+        else
+            table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.MODFORUMS, nopop=true, cb = function() VisitURL("https://forums.kleientertainment.com/forums/forum/79-dont-starve-together-mods-and-tools/") end })
 
-        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
-
+        
+        end
 
 
         
 
-    
+        
         
     end
 
@@ -205,3 +212,5 @@ DisplayError = function(error)
             20
             )
 end
+
+

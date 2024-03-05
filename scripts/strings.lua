@@ -13,7 +13,7 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
 
 
-    SAVEQUICKLOG = "Save Quick Log\n(Saves in DST's Data folder)",
+    SAVEQUICKLOG = "Save Quicklog\n(Saves in DST's Data folder)",
     SAVEDQUICKLOG = "Quicklog has been created in DST's data folder",
 
 
