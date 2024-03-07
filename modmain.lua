@@ -177,13 +177,13 @@ DisplayError = function(error)
         -- end
         if modnameforurl then
             BETTERCRASHSCREEN_CAUSE = modnameforurl
-            print("CAUSE IS "..BETTERCRASHSCREEN_CAUSE)
-            table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
-        else
-            table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.MODFORUMS, nopop=true, cb = function() VisitURL("https://forums.kleientertainment.com/forums/forum/79-dont-starve-together-mods-and-tools/") end })
+            --table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
+        
 
         
         end
+        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.MODFORUMS, nopop=true, cb = function() VisitURL("https://forums.kleientertainment.com/forums/forum/79-dont-starve-together-mods-and-tools/") end })
+
 
 
         

@@ -1,6 +1,16 @@
-GLOBAL.setmetatable(env, {__index = function(t, k) return GLOBAL.rawget(GLOBAL, k) end})
+do
+    local GLOBAL = GLOBAL
+    local modEnv = GLOBAL.getfenv(1)
+    local rawget, setmetatable = GLOBAL.rawget, GLOBAL.setmetatable
+    setmetatable(modEnv, {
+        __index = function(self, index)
+            return rawget(GLOBAL, index)
+        end
+        -- lack of __newindex means it defaults to modEnv, so we don't mess up globals.
+    })
 
-
+    _G = GLOBAL
+end
 
 
 
@@ -15,7 +25,7 @@ GLOBAL.setmetatable(env, {__index = function(t, k) return GLOBAL.rawget(GLOBAL, 
 AddClassPostConstruct("widgets/scripterrorwidget",
     function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, error, ...)
 
-
+        local Text = require "widgets/text"
 
 
 
@@ -23,7 +33,21 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
+        --text
 
+        self.infotext = self.root:AddChild(Text(sel_font, 35))
+        self.infotext:SetVAlign(ANCHOR_TOP)
+    
+        if texthalign then
+            self.infotext:SetHAlign(ANCHOR_MIDDLE)
+        end
+    
+        self.infotext:SetPosition(0, -275, 0)
+        self.infotext:SetString("")
+        self.infotext:EnableWordWrap(true)
+        self.infotext:SetRegionSize(480*2, 200)
+        self.infotext:MoveToFront()
+        self.infotext:SetColour(RGB(255, 199, 41, 1))
 
 
 
@@ -36,7 +60,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-        if GetModConfigData("ReduxCrashScreen") ~= "redux" then
+        if GetModConfigData("ReduxCrashScreen") == "classic" then
             
             if GetModConfigData("DocumentsButton") == 1 then
                 --Client log location button
@@ -76,6 +100,11 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             self.workshopbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
 
 
+            if not BETTERCRASHSCREEN_CAUSE then
+                self.workshopbutton:Hide()
+            end
+
+
 
             local function CW_CreateTextFileCommand(text)
                 local modname = KnownModIndex:GetModFancyName(modname)
@@ -94,7 +123,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
                 self.createquick_log = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
-                        self.text:SetString(text.."\nQuicklog has been saved to Don't Starve Together's data folder.")
+                        self.infotext:SetString("Quicklog has been saved to Don't Starve Together's data folder.")
 
                     end,
                     { font = sel_font }))
@@ -113,10 +142,30 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             end
 
             ----------------------------------------------------
-        else
+        end
+        if GetModConfigData("ReduxCrashScreen") == "redux" then
 
             local TEXT_OFFSET = 125
             local sel_font =  type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or HEADERFONT
+
+
+
+                --text
+
+                self.infotext = self.root:AddChild(Text(sel_font, 25))
+                self.infotext:SetVAlign(ANCHOR_TOP)
+            
+                if texthalign then
+                    self.infotext:SetHAlign(ANCHOR_MIDDLE)
+                end
+            
+                self.infotext:SetPosition(0, -240, 0)
+                self.infotext:SetString("")
+                self.infotext:EnableWordWrap(true)
+                self.infotext:SetRegionSize(480*2, 200)
+                self.infotext:MoveToFront()
+                self.infotext:SetColour(RGB(255, 199, 41, 1))
+
 
             --Client log location button
 
@@ -184,7 +233,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
                 self.createquick_log = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
-                        self.text:SetString(text.."\nQuicklog has been saved to Don't Starve Together's data folder.")
+                        self.infotext:SetString("Quicklog has been saved to Don't Starve Together's data folder.")
                     end,
                     { font = sel_font }))
                 self.createquick_log:SetPosition(-450, 285 - 45)
@@ -218,7 +267,9 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             
             
 
-
+            self.createquick_log:SetScale(0.89)
+            self.documentsbutton:SetScale(0.89)
+            self.workshopbutton:SetScale(0.89)
             
                 self.createquick_log:SetPosition(-390, button_y)
                 self.createquick_log.text:Hide()

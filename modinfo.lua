@@ -10,7 +10,7 @@ author = "Niko"
 
 
 
-version = "0.3.5"
+version = "0.3.6"
 
 
 
@@ -110,7 +110,7 @@ if config == true then
             { description = "Modern",  data = "redux", hover="Post-Forge Look (Redux)"},
 
         },
-        default = "classic"
+        default = "redux"
 
     },
 
@@ -137,10 +137,10 @@ if config == true then
             { description = "Default", data = 1.08},
             { description = "1.15", data = 1.15},
             { description = "1.25", data = 1.25},
-            { description = "1.5", data = 1.5},
+            { description = "1.4", data = 1.4},
 
         },
-        default = 1.08
+        default = 1.4
 
     },
 
@@ -228,7 +228,7 @@ if config == true then
             { description = "Disabled", data = false },
 
         },
-        default = false
+        default = true
     },
 
     {
@@ -341,7 +341,9 @@ Improves the crash screen to give more detailed information and makes it easier 
     
     changelog= [[󰀏 What's New:
 
-    󰀈 Added Nostalgia mod config and fixed misaligned text
+    󰀈 Added Workshop button when game crashes with a main cause
+
+    󰀈 Adjusted Default settings
 
 
     
