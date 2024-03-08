@@ -10,7 +10,7 @@ author = "Niko"
 
 
 
-version = "0.3.6"
+version = "0.3.7"
 
 
 
@@ -341,9 +341,9 @@ Improves the crash screen to give more detailed information and makes it easier 
     
     changelog= [[󰀏 What's New:
 
-    󰀈 Added Workshop button when game crashes with a main cause
+    󰀈 Fixed issue where Reconnect did not show on certain screens
+    (The Reconnect button only shows on dedi server that shows the dedi icon on scoreboard)
 
-    󰀈 Adjusted Default settings
 
 
     

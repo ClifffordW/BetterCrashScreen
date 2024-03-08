@@ -30,6 +30,7 @@ env.AddClassPostConstruct("screens/redux/multiplayermainscreen", function(self, 
         end)
 
         self.inst:DoTaskInTime(1.5, function()
+            TheFrontEnd:GetSound():PlaySound("dontstarve/common/lava_arena/player_joined", 0.35)
             JoinServer(self.bettercrashscr_cached_server)
         end)
 

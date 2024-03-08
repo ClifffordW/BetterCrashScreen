@@ -108,7 +108,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
             copy_to_clipboard(text)
         end
     }) ]]
-        if ThePlayer and TheWorld and InGamePlay() and not TheNet:GetServerIsClientHosted() then
+        if (InGamePlay() or ThePlayer) and not TheNet:GetServerIsClientHosted() then
             table.insert(buttons,
                 {
                     text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RECONNECT,
