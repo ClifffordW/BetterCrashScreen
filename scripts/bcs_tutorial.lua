@@ -12,6 +12,8 @@ do
     _G = GLOBAL
 end
 
+
+
 local sel_font =  type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or HEADERFONT
 
 
@@ -28,49 +30,6 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         local TEMPLATES = require "widgets/redux/templates"
         local NineSlice = require "widgets/nineslice"
         local PopupDialogScreenRedux = require "screens/redux/popupdialog"
-        
-
-        TheSim:GetPersistentString("BetterCrashScreen_tutorial", function(load_success, data)
-            if load_success and data ~= nil then
-                local status, bettercrashscr = pcall(function() return json.decode(data) end)
-                if status and bettercrashscr then
-                    self.bettercrashscr_seentutorial = bettercrashscr.bettercrashscr_tutorial
-                    self.loaded = true
-                end
-            end
-        end)
-        
-        
-        local locationData = { bettercrashscr_tutorial = true }
-        local jsonString = json.encode(locationData)
-
-
-        function AttachToMouse(widget)
-            local x, y
-            local followhandler
-        
-            local function UpdatePosition(self, x, y)
-                widget:SetPosition(Vector3(x, y, 0))
-            end
-        
-            followhandler = TheInput:AddMoveHandler(function(mx, my)
-                UpdatePosition(widget, mx, my)
-            end)
-        
-            widget.FollowMouse = function(self)
-                if followhandler == nil then
-                    followhandler = TheInput:AddMoveHandler(function(mx, my)
-                        UpdatePosition(self, mx, my)
-                    end)
-                    self:SetPosition(TheInput:GetScreenPosition())
-                end
-            end
-        
-            widget:FollowMouse()
-        
-        
-        end
-
 
 
         function self.CustomIconButton2(iconAtlas, iconTexture, labelText, sideLabel, alwaysShowLabel, onclick, textinfo, defaultTexture)
@@ -112,11 +71,83 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         
             return btn
         end
+
+        
+
+        TheSim:GetPersistentString("BetterCrashScreen_tutorial", function(load_success, data)
+            if load_success and data ~= nil then
+                local status, bettercrashscr = pcall(function() return json.decode(data) end)
+                if status and bettercrashscr then
+                    self.bettercrashscr_seentutorial = bettercrashscr.bettercrashscr_tutorial
+                    self.loaded = true
+                end
+            end
+        end)
+
+
+        if GetModConfigData("RewatchTutorial") == 1 then
+            local locationData = { bettercrashscr_tutorial = false }
+            local jsonString = json.encode(locationData)
+            self.rewatchbutton = self.fixed_root:AddChild(self.CustomIconButton2("images/button_icons.xml", "undo.tex",
+            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.REWATCH, false, true, function() 
+            
+            
+                TheSim:SetPersistentString("BetterCrashScreen_tutorial", jsonString, false)
+
+                TheSim:ResetError()
+                c_reset()
+            end,
+            { font = NEWFONT_OUTLINE, size = 24 }))
+
+            self.rewatchbutton:SetScale(0.85)
+            self.rewatchbutton:SetPosition( 550, -280)
+        end
+        
+        
+        local locationData = { bettercrashscr_tutorial = true }
+        local jsonString = json.encode(locationData)
+
+
+        function AttachToMouse(widget)
+            local x, y
+            local followhandler
+        
+            local function UpdatePosition(self, x, y)
+                widget:SetPosition(Vector3(x, y, 0))
+            end
+        
+            followhandler = TheInput:AddMoveHandler(function(mx, my)
+                UpdatePosition(widget, mx, my)
+            end)
+        
+            widget.FollowMouse = function(self)
+                if followhandler == nil then
+                    followhandler = TheInput:AddMoveHandler(function(mx, my)
+                        UpdatePosition(self, mx, my)
+                    end)
+                    self:SetPosition(TheInput:GetScreenPosition())
+                end
+            end
+        
+            widget:FollowMouse()
+        
+        
+        end
+
+
+
+
         
 
         
 
     if not self.bettercrashscr_seentutorial then
+
+
+        
+
+
+
         self.crashbg = self.fixed_root:AddChild(UIAnim())
 
         local crashbg = self.crashbg
@@ -217,7 +248,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         self.inst:DoTaskInTime(0.5, function()
             _sound:SetVolume("FEMusic", 0)
             cw_PlayFMODEvent("helping_arrow_bg", 0.45)
-            cw_PlayFMODEvent("voiceover", 0.45)
+            cw_PlayFMODEvent("voiceover", 0.29)
             crashbg:Show()
         end)
 

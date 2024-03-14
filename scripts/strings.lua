@@ -22,6 +22,8 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
     SKIP = "Skip",
 
+    REWATCH = "Rewatch BCS Tutorial",
+
     
 
 }

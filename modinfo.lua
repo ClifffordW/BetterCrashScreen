@@ -10,7 +10,7 @@ author = "Niko"
 
 
 
-version = "0.4.9"
+version = "0.5.1"
 
 
 
@@ -128,6 +128,9 @@ if config == true then
 
     },
 
+
+
+
     {
         name = "reduxscale",
         label = "Modern Crashscreen Scale",
@@ -185,7 +188,21 @@ if config == true then
         default = 0
     },
 
+    Title("Tutorial"),
 
+    {
+        name = "RewatchTutorial",
+        label = "Rewatch BCS Button",
+        hover = "",
+        options =
+        {
+            { description = "Enabled", data = 1},
+            { description = "Disabled",  data = 0},
+
+        },
+        default = 1
+
+    },
 
 
 
@@ -354,7 +371,10 @@ Improves the crash screen to give more detailed information and makes it easier 
     
     changelog= [[󰀏 What's New:
 
-    󰀈 Added forced tutorial for users (will only show once)
+    󰀈 Adjusted Voiceover volume
+
+    󰀈 Fixed Crash (ironic)
+
 
 
 
