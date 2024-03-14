@@ -10,7 +10,7 @@ author = "Niko"
 
 
 
-version = "0.3.7"
+version = "0.4.9"
 
 
 
@@ -205,6 +205,19 @@ if config == true then
     },
 
     {
+        name = "AutoSaveLog",
+        label = "Auto-Save Quicklog",
+        hover = "Automatically Saves log into DST's data folder\n Doesnt create the Save button",
+        options =
+        {
+            { description = "Enabled",  data = 1 },
+            { description = "Disabled", data = 0 },
+
+        },
+        default = 0
+    },
+
+    {
         name = "DocumentsButton",
         label = "Clientlog Folder Button",
         hover = "Opens your DST documents folder. \nGo back by one folder to find client log",
@@ -341,8 +354,8 @@ Improves the crash screen to give more detailed information and makes it easier 
     
     changelog= [[󰀏 What's New:
 
-    󰀈 Fixed issue where Reconnect did not show on certain screens
-    (The Reconnect button only shows on dedi server that shows the dedi icon on scoreboard)
+    󰀈 Added forced tutorial for users (will only show once)
+
 
 
 

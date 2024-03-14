@@ -21,12 +21,10 @@ end
 
 
 
-
 AddClassPostConstruct("widgets/scripterrorwidget",
     function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, error, ...)
 
         local Text = require "widgets/text"
-
 
 
         local sel_font =  type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or BODYTEXTFONT
@@ -42,7 +40,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             self.infotext:SetHAlign(ANCHOR_MIDDLE)
         end
     
-        self.infotext:SetPosition(0, -275, 0)
+        self.infotext:SetPosition(350, 170, 0)
         self.infotext:SetString("")
         self.infotext:EnableWordWrap(true)
         self.infotext:SetRegionSize(480*2, 200)
@@ -78,6 +76,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
                 self.documentsbutton:SetTextColour(255, 255, 255, 1)
+                
             end
 
             
@@ -119,11 +118,11 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             global"CW_CreateTextFileCommand"
 
             --Client log location button
-            if GetModConfigData("SaveLog") == 1 then
+            if GetModConfigData("SaveLog") == 1 and GetModConfigData("AutoSaveLog") == 0  then
                 self.createquick_log = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
-                        self.infotext:SetString("Quicklog has been saved to Don't Starve Together's data folder.")
+                        self.infotext:SetString("Quicklog Saved.")
 
                     end,
                     { font = sel_font }))
@@ -139,6 +138,11 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
                 self.createquick_log:SetTextColour(255, 255, 255, 1)
+
+            else
+                CW_CreateTextFileCommand(text)
+                self.infotext:SetString("Quicklog Saved.")
+
             end
 
             ----------------------------------------------------
@@ -159,7 +163,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
                     self.infotext:SetHAlign(ANCHOR_MIDDLE)
                 end
             
-                self.infotext:SetPosition(0, -240, 0)
+                self.infotext:SetPosition(350, 170, 0)
                 self.infotext:SetString("")
                 self.infotext:EnableWordWrap(true)
                 self.infotext:SetRegionSize(480*2, 200)
@@ -229,11 +233,11 @@ AddClassPostConstruct("widgets/scripterrorwidget",
                 end
             end
 
-            if GetModConfigData("SaveLog") == 1 then
+            if GetModConfigData("SaveLog") == 1 and GetModConfigData("AutoSaveLog") == 0  then
                 self.createquick_log = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
-                        self.infotext:SetString("Quicklog has been saved to Don't Starve Together's data folder.")
+                        self.infotext:SetString("Quicklog Saved.")
                     end,
                     { font = sel_font }))
                 self.createquick_log:SetPosition(-450, 285 - 45)
@@ -248,6 +252,15 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
                 self.createquick_log.text:SetHAlign(ANCHOR_LEFT)
                 self.createquick_log.text_shadow:SetHAlign(ANCHOR_LEFT)
+
+
+            else
+                CW_CreateTextFileCommand(text)
+                self.infotext:SetString("Quicklog Saved.")
+
+
+            
+                
             end
         end
 
@@ -288,6 +301,10 @@ AddClassPostConstruct("widgets/scripterrorwidget",
         
         
         end
+
+
+
+
    
    
    

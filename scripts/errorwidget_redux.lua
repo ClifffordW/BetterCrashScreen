@@ -1,9 +1,20 @@
-local env = env
-GLOBAL.setfenv(1, GLOBAL)
+do
+    local GLOBAL = GLOBAL
+    local modEnv = GLOBAL.getfenv(1)
+    local rawget, setmetatable = GLOBAL.rawget, GLOBAL.setmetatable
+    setmetatable(modEnv, {
+        __index = function(self, index)
+            return rawget(GLOBAL, index)
+        end
+        -- lack of __newindex means it defaults to modEnv, so we don't mess up globals.
+    })
 
-local sel_font =  type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or HEADERFONT
+    _G = GLOBAL
+end
 
-env.AddClassPostConstruct("widgets/scripterrorwidget",
+local sel_font = type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or HEADERFONT
+
+AddClassPostConstruct("widgets/scripterrorwidget",
     function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, ...)
         local Menu = require "widgets/menu"
         local Button = require "widgets/button"
@@ -17,6 +28,8 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         local PopupDialogScreenRedux = require "screens/redux/popupdialog"
 
         self.root:SetScaleMode(SCALEMODE_NONE)
+
+
 
 
         self.black:SetTint(0, 0, 0, 0.75)
@@ -91,7 +104,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
             },
 
         }
-        if ThePlayer and ThePlayer.Network:IsServerAdmin() and not (TheNet:GetServerIsClientHosted() and TheNet:GetIsHosting()) then
+        if ThePlayer and ThePlayer.Network:IsServerAdmin() and TheNet:GetServerIsClientHosted() then
             table.insert(buttons,
                 {
                     text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
@@ -131,7 +144,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         self.title_shadow:SetPosition(0, 252, 0)
         self.title_shadow:SetColour(0, 0, 0, 1)
         self.title_shadow:SetString(title)
-        
+
         self.title:SetSize(50)
 
         self.menu_new = self.root:AddChild(Menu(buttons, 385, true, nil, true))
@@ -179,7 +192,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-        
+
 
         self.text_shadow:SetFont(sel_font)
 
@@ -196,6 +209,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         self.menu:MoveToFront()
 
         self.menu:SetPosition(0, -195, 0)
+
 
         for k, v in pairs(self.menu_new.items) do
             -- dumptable(v)
@@ -223,7 +237,9 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 "button_carny_xlong_disabled.tex", nil, nil, { 0.75, 0.85 })
             v:SetScale(0.72)
         end
-        local scale = env.GetModConfigData("nostalgia") ~= 1 and  env.GetModConfigData("reduxscale") or 1.08
+        local scale = GetModConfigData("nostalgia") ~= 1 and GetModConfigData("reduxscale") or 1.08
 
         self.root:SetScale(scale)
     end)
+
+

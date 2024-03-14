@@ -19,6 +19,9 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
     MODPAGE = "Workshop Page",
 
+
+    SKIP = "Skip",
+
     
 
 }

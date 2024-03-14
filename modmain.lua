@@ -2,12 +2,19 @@
 
 
 
+Assets = 
+{
+    Asset("SOUND", "sound/arrow.fsb"),
+    Asset("SOUNDPACKAGE", "sound/arrow.fev"),
+    Asset("ANIM", "anim/detectivehayseed_hint.zip")
+}
 
 GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD = "bettercrashscreen_font_wildcard"
 
 table.insert(GLOBAL.FONTS, 	{ filename = GLOBAL.resolvefilepath("fonts/crashfont_wildcard.zip"), alias = GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD, fallback = GLOBAL.DEFAULT_FALLBACK_TABLE_OUTLINE })
 
 print("FONT IS "..GetModConfigData("font"))
+
 
 
 
@@ -24,6 +31,9 @@ end
 modimport("scripts/logrelated_buttons")
 
 modimport("scripts/smallbonus")
+modimport("scripts/bcs_tutorial")
+
+
 
 local env = env
 GLOBAL.setfenv(1, GLOBAL)
@@ -36,13 +46,14 @@ GLOBAL.setfenv(1, GLOBAL)
 
 DisplayError = function(error)
 
-
+    
+    
+    
     SetPause(true,"DisplayError")
-
     
 
-
-
+    
+    
 
     if global_error_widget ~= nil then
        
@@ -61,6 +72,7 @@ DisplayError = function(error)
 
 
 
+    
 
     
 
@@ -185,6 +197,7 @@ DisplayError = function(error)
         table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.MODFORUMS, nopop=true, cb = function() VisitURL("https://forums.kleientertainment.com/forums/forum/79-dont-starve-together-mods-and-tools/") end })
 
 
+        
 
         
 

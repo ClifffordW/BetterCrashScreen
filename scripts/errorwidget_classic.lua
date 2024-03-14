@@ -2,7 +2,7 @@ local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
 
-local sel_font =  type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or BODYTEXTFONT
+local sel_font = type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or BODYTEXTFONT
 
 
 env.AddClassPostConstruct("widgets/scripterrorwidget",
@@ -18,6 +18,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
         local has_classicframe = env.GetModConfigData("ClassicFrame")
 
+
         local STYLES =
         {
 
@@ -32,6 +33,11 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 text = { font = NEWFONT_OUTLINE, size = 28, colour = { 1, 1, 1, 1 } },
             },
         }
+
+
+
+
+
 
 
         self.style = "dark"
@@ -54,7 +60,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
                 end
             },
         }
-        if ThePlayer and ThePlayer.Network:IsServerAdmin() and not (TheNet:GetServerIsClientHosted() and TheNet:GetIsHosting()) then -- If the server is client hosted then the game has trouble reloading.
+        if ThePlayer and ThePlayer.Network:IsServerAdmin() and (TheNet:GetServerIsClientHosted() and TheNet:GetIsHosting()) then   -- If the server is client hosted then the game has trouble reloading.
             table.insert(buttons,
                 {
                     text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
@@ -111,8 +117,13 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         self.menu_new:SetPosition(0, -315, 0)
         self.menu_new:SetScale(0.63)
 
+
+
+
+
+
         self.additionaltext:SetFont(sel_font)
         self.text:SetFont(sel_font)
-        self.title:SetFont( type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or BODYTEXTFONT)
-
+        self.title:SetFont(type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or
+        BODYTEXTFONT)
     end)
