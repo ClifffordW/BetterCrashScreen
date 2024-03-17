@@ -13,7 +13,7 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
 
 
-    SAVEQUICKLOG = "Save Quicklog\n(Saves in DST's Data folder)",
+    SAVEQUICKLOG = "Save Quicklog and\nOpens the location",
     SAVEDQUICKLOG = "Quicklog has been created in DST's data folder",
 
 
@@ -22,7 +22,7 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
     SKIP = "Skip",
 
-    REWATCH = "Rewatch BCS Tutorial",
+    REWATCH = "Re/Watch BCS Tutorial",
 
     
 

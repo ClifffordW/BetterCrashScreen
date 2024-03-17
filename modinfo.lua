@@ -10,7 +10,7 @@ author = "Niko"
 
 
 
-version = "0.5.1"
+version = "0.5.4"
 
 
 
@@ -244,7 +244,7 @@ if config == true then
             { description = "Disabled", data = 0 },
 
         },
-        default = 1
+        default = 0
     },
 
 
@@ -371,9 +371,13 @@ Improves the crash screen to give more detailed information and makes it easier 
     
     changelog= [[󰀏 What's New:
 
-    󰀈 Adjusted Voiceover volume
+󰀈 Folder button disabled by default now
 
-    󰀈 Fixed Crash (ironic)
+󰀈 Quicklog is now saved elsewhere and upon saving opens the location
+
+󰀈 If log contains mod that caused crash it'll be labelled ex. (quick_log_menuremix) if it's other causes (quick_log_gamecrash)
+
+
 
 
 

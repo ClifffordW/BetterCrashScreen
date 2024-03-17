@@ -84,6 +84,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
             end
         end)
 
+        
 
         if GetModConfigData("RewatchTutorial") == 1 then
             local locationData = { bettercrashscr_tutorial = false }
@@ -140,13 +141,23 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         
 
         
+        self.bettercrashscr_seentutorial = true
+
+        TheSim:GetPersistentString("BetterCrashScreen_tutorial", function(load_success, data)
+            if load_success and data ~= nil then
+                local status, bettercrashscr = pcall(function() return json.decode(data) end)
+                if status and bettercrashscr then
+                    self.bettercrashscr_seentutorial = bettercrashscr.bettercrashscr_tutorial
+                    self.loaded = true
+                end
+            end
+        end)
 
     if not self.bettercrashscr_seentutorial then
-
-
         
 
 
+        
 
         self.crashbg = self.fixed_root:AddChild(UIAnim())
 
@@ -228,7 +239,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
 
         --This is a stupid thing but i dont have the brain for better one
         local _sound = TheFrontEnd:GetSound()
-        cw_PlayFMODEvent("helping_arrow_bg", 0.45)
+        cw_PlayFMODEvent("helping_arrow_bg", 0.12)
         helparrow.inst:DoPeriodicTask(FRAMES, function()
             if not _sound:PlayingSound("helparrow") then
                 cw_PlayFMODEvent("helping_arrow", 0.75)
@@ -247,8 +258,8 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
 
         self.inst:DoTaskInTime(0.5, function()
             _sound:SetVolume("FEMusic", 0)
-            cw_PlayFMODEvent("helping_arrow_bg", 0.45)
-            cw_PlayFMODEvent("voiceover", 0.29)
+            cw_PlayFMODEvent("helping_arrow_bg", 0.12)
+            cw_PlayFMODEvent("voiceover", 0.10)
             crashbg:Show()
         end)
 

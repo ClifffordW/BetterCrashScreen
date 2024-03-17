@@ -40,7 +40,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             self.infotext:SetHAlign(ANCHOR_MIDDLE)
         end
     
-        self.infotext:SetPosition(350, 170, 0)
+        self.infotext:SetPosition(0, 200, 0)
         self.infotext:SetString("")
         self.infotext:EnableWordWrap(true)
         self.infotext:SetRegionSize(480*2, 200)
@@ -57,8 +57,40 @@ AddClassPostConstruct("widgets/scripterrorwidget",
         local has_classicframe = GetModConfigData("ClassicFrame")
 
 
+        local function CW_CreateTextFileCommand(text)
+            local modname = KnownModIndex:GetModFancyName(modname)
+
+
+
+
+            local modcause = BETTERCRASHSCREEN_CAUSE and string.gsub(string.lower(KnownModIndex:GetModFancyName("workshop-"..BETTERCRASHSCREEN_CAUSE)), "%s+", "") or nil
+
+            local whichfile = modcause or "gamecrash"
+
+            local file =   "quick_log_"..whichfile..".txt"
+
+            TheSim:SetPersistentString("../"..file, text, false,
+            function (succ)
+                if succ then
+                    self.infotext:SetString(file.." created.")
+                    TheSim:OpenDocumentsFolder()
+                else
+                    print("Erorr: Unable to write console contents to "..file"..!")
+                end
+            end)
+            
+        
+        
+        end
+
+
+
+  
+
 
         if GetModConfigData("ReduxCrashScreen") == "classic" then
+
+            self.documents_shown = false
             
             if GetModConfigData("DocumentsButton") == 1 then
                 --Client log location button
@@ -76,6 +108,11 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
                 self.documentsbutton:SetTextColour(255, 255, 255, 1)
+
+                self.documentsbutton.text:SetHAlign(ANCHOR_LEFT)
+                self.documentsbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
+
+                self.documents_shown = true
                 
             end
 
@@ -91,8 +128,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             self.workshopbutton:SetTextColour(255, 255, 255, 1)
             self.workshopbutton:SetScale(0.89)
 
-            self.documentsbutton.text:SetHAlign(ANCHOR_LEFT)
-            self.documentsbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
+
 
             ----------------------------------------------------
             self.workshopbutton.text:SetHAlign(ANCHOR_LEFT)
@@ -105,44 +141,36 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-            local function CW_CreateTextFileCommand(text)
-                local modname = KnownModIndex:GetModFancyName(modname)
-                local filename = string.lower(string.gsub(modname, " ", "")) .. "_quicklog.txt"
-
-                local file = io.open(filename, "w")
-                if file then
-                    file:write(text)
-                    file:close()
-                end
-            end
-            global"CW_CreateTextFileCommand"
 
             --Client log location button
             if GetModConfigData("SaveLog") == 1 and GetModConfigData("AutoSaveLog") == 0  then
                 self.createquick_log = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
-                        self.infotext:SetString("Quicklog Saved.")
-
+                        
                     end,
                     { font = sel_font }))
-                self.createquick_log:SetPosition(-450, 220)
+                self.createquick_log:SetPosition(-450, 285 - 45)
                 self.createquick_log:SetTextSize(22)
-                self.createquick_log.text:SetPosition(TEXT_OFFSET + 25, 0)
-                self.createquick_log.text_shadow:SetPosition(TEXT_OFFSET + 25 + 2, 0)
+                self.createquick_log.text:SetPosition(TEXT_OFFSET + 30, 0)
+                self.createquick_log.text_shadow:SetPosition(TEXT_OFFSET + 30 + 2, 0)
 
-                self.createquick_log:SetScale(0.89)
+
+                self.createquick_log:SetScale(0.75)
+
+                self.createquick_log:SetTextColour(255, 255, 255, 1)
+
                 self.createquick_log.text:SetHAlign(ANCHOR_LEFT)
                 self.createquick_log.text_shadow:SetHAlign(ANCHOR_LEFT)
 
 
-
-                self.createquick_log:SetTextColour(255, 255, 255, 1)
-
             else
                 CW_CreateTextFileCommand(text)
-                self.infotext:SetString("Quicklog Saved.")
+                self.infotext:SetString(file.." created.")
 
+
+            
+                
             end
 
             ----------------------------------------------------
@@ -156,14 +184,14 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
                 --text
 
-                self.infotext = self.root:AddChild(Text(sel_font, 25))
+                self.infotext = self.root:AddChild(Text(sel_font, 18))
                 self.infotext:SetVAlign(ANCHOR_TOP)
             
                 if texthalign then
                     self.infotext:SetHAlign(ANCHOR_MIDDLE)
                 end
             
-                self.infotext:SetPosition(350, 170, 0)
+                self.infotext:SetPosition(0, 200, 0)
                 self.infotext:SetString("")
                 self.infotext:EnableWordWrap(true)
                 self.infotext:SetRegionSize(480*2, 200)
@@ -173,7 +201,9 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
             --Client log location button
 
+            self.documents_shown = false
             if GetModConfigData("DocumentsButton") == 1 then
+                
                 self.documentsbutton = self.root:AddChild(TEMPLATES.IconButton("images/button_icons2.xml",
                     "local_filter.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.CLIENTLOG_LOC, false, true,
@@ -187,6 +217,8 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
                 self.documentsbutton.text:SetHAlign(ANCHOR_LEFT)
                 self.documentsbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
+
+                self.documents_shown = true
 
 
             end
@@ -222,22 +254,13 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
 
-            local function CW_CreateTextFileCommand(text)
-                local modname = KnownModIndex:GetModFancyName(modname)
-                local filename = string.lower(string.gsub(modname, " ", "")) .. "_quicklog.txt"
 
-                local file = io.open(filename, "w")
-                if file then
-                    file:write(text)
-                    file:close()
-                end
-            end
 
             if GetModConfigData("SaveLog") == 1 and GetModConfigData("AutoSaveLog") == 0  then
                 self.createquick_log = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "save.tex",
                     STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
-                        self.infotext:SetString("Quicklog Saved.")
+                        
                     end,
                     { font = sel_font }))
                 self.createquick_log:SetPosition(-450, 285 - 45)
@@ -256,7 +279,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
             else
                 CW_CreateTextFileCommand(text)
-                self.infotext:SetString("Quicklog Saved.")
+                self.infotext:SetString(file.." created.")
 
 
             
@@ -265,11 +288,16 @@ AddClassPostConstruct("widgets/scripterrorwidget",
         end
 
         if GetModConfigData("ReduxCrashScreen") ~= "redux" and has_classicframe then
-            self.documentsbutton:SetPosition(255, 125 + 55)
-            self.createquick_log:SetPosition(255, 125)
-
-            self.workshopbutton:SetPosition(255, 125 - 55)
-
+            if self.documentsbutton then
+                self.documentsbutton:SetPosition(255, 125 + 55)
+            end
+            if self.createquick_log then
+                self.createquick_log:SetPosition(255, 125)
+            end
+            
+            if self.workshopbutton then
+                self.workshopbutton:SetPosition(255, 125 - 55)
+            end
 
             
 
@@ -278,25 +306,64 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
         if is_combined and closerto_log  then
             
-            
+            local offset = self.documents_shown and  0 or -60
 
-            self.createquick_log:SetScale(0.89)
-            self.documentsbutton:SetScale(0.89)
-            self.workshopbutton:SetScale(0.89)
-            
-                self.createquick_log:SetPosition(-390, button_y)
+            if self.createquick_log then
+                self.createquick_log:SetScale(0.89)
+                self.createquick_log:SetPosition(-390 + offset, button_y)
                 self.createquick_log.text:Hide()
                 self.createquick_log.text_shadow:Hide()
+            end
 
+            if self.documentsbutton then
+                
+    
+    
                 self.documentsbutton:SetPosition(-450, button_y)
                 self.documentsbutton.text:Hide()
                 self.documentsbutton.text_shadow:Hide()
+                self.documentsbutton:SetScale(0.89)
+
+            end
 
 
-                self.workshopbutton:SetPosition(-390 + 60, button_y)
+            if self.workshopbutton then 
+                self.workshopbutton:SetPosition(-390 + 60 + offset, button_y)
                 self.workshopbutton.text:Hide()
                 self.workshopbutton.text_shadow:Hide()
+                self.workshopbutton:SetScale(0.89)
 
+            end
+
+            if GetModConfigData("ReduxCrashScreen") ~= "redux" and has_classicframe then 
+                if self.createquick_log then
+                    self.createquick_log:SetScale(0.89)
+                    self.createquick_log:SetPosition(-390 + offset, button_y)
+                    self.createquick_log.text:Hide()
+                    self.createquick_log.text_shadow:Hide()
+                end
+    
+                if self.documentsbutton then
+                    
+        
+        
+                    self.documentsbutton:SetPosition(-450, button_y)
+                    self.documentsbutton.text:Hide()
+                    self.documentsbutton.text_shadow:Hide()
+                    self.documentsbutton:SetScale(0.89)
+    
+                end
+    
+    
+                if self.workshopbutton then 
+                    self.workshopbutton:SetPosition(-390 + 60 + offset, button_y)
+                    self.workshopbutton.text:Hide()
+                    self.workshopbutton.text_shadow:Hide()
+                    self.workshopbutton:SetScale(0.89)
+    
+                end
+
+            end
         
         
         

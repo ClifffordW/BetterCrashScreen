@@ -12,6 +12,8 @@ do
     _G = GLOBAL
 end
 
+
+
 local sel_font = type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or HEADERFONT
 
 AddClassPostConstruct("widgets/scripterrorwidget",

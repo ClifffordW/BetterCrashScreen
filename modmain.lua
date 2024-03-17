@@ -1,7 +1,6 @@
 
 
 
-
 Assets = 
 {
     Asset("SOUND", "sound/arrow.fsb"),
@@ -47,7 +46,7 @@ GLOBAL.setfenv(1, GLOBAL)
 DisplayError = function(error)
 
     
-    
+
     
     SetPause(true,"DisplayError")
     
@@ -189,8 +188,9 @@ DisplayError = function(error)
         -- end
         if modnameforurl then
             BETTERCRASHSCREEN_CAUSE = modnameforurl
+            
             --table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
-        
+
 
         
         end
