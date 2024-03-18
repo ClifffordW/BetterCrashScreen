@@ -49,8 +49,8 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         local buttons =
         {
             {
-                text = InGamePlay() and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RETURNTOMENU or
-                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.GAMERELOAD,
+                text = InGamePlay() and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].RETURNTOMENU or
+                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].GAMERELOAD,
                 cb = function()
                     if InGamePlay() then
                         TheNet:Disconnect(true) -- The game seems to have issues if we don't manually disconnect
@@ -63,7 +63,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         if ThePlayer and ThePlayer.Network:IsServerAdmin() and (TheNet:GetServerIsClientHosted() and TheNet:GetIsHosting()) then   -- If the server is client hosted then the game has trouble reloading.
             table.insert(buttons,
                 {
-                    text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
+                    text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SCRIPTERRORRESTART,
                     cb = function()
                         TheSim:ResetError()
                         c_reset()
@@ -80,7 +80,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         if (InGamePlay() or ThePlayer) and not TheNet:GetServerIsClientHosted() then
             table.insert(buttons,
                 {
-                    text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.RECONNECT,
+                    text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].RECONNECT,
                     cb = function()
                         local listing = TheNet:GetServerListing()
 

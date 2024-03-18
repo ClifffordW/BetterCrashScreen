@@ -96,7 +96,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
                 --Client log location button
                 self.documentsbutton = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons2.xml",
                     "local_filter.tex",
-                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.CLIENTLOG_LOC, false, true,
+                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].CLIENTLOG_LOC, false, true,
                     function() TheSim:OpenDocumentsFolder() end, { font = sel_font }))
                 self.documentsbutton:SetPosition(-450, 275)
                 self.documentsbutton:SetTextSize(22)
@@ -119,7 +119,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             
 
             self.workshopbutton = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "more_info.tex",
-            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, false, true,
+            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODPAGE, false, true,
             function() if BETTERCRASHSCREEN_CAUSE then VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..BETTERCRASHSCREEN_CAUSE) end end, { font = sel_font }))
             self.workshopbutton:SetPosition(-450, 220  - 55 )
             self.workshopbutton:SetTextSize(22)
@@ -145,7 +145,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             --Client log location button
             if GetModConfigData("SaveLog") == 1 and GetModConfigData("AutoSaveLog") == 0  then
                 self.createquick_log = self.root:AddChild(TEMPLATES_OLD.IconButton("images/button_icons.xml", "save.tex",
-                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
+                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
                         
                     end,
@@ -206,7 +206,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
                 
                 self.documentsbutton = self.root:AddChild(TEMPLATES.IconButton("images/button_icons2.xml",
                     "local_filter.tex",
-                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.CLIENTLOG_LOC, false, true,
+                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].CLIENTLOG_LOC, false, true,
                     function() TheSim:OpenDocumentsFolder() end, { font = sel_font }))
                 self.documentsbutton:SetPosition(-450, 285)
                 self.documentsbutton:SetTextSize(22)
@@ -226,7 +226,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
 
             self.workshopbutton = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "more_info.tex",
-            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, false, true,
+            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODPAGE, false, true,
             function() if BETTERCRASHSCREEN_CAUSE then VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..BETTERCRASHSCREEN_CAUSE) end end, { font = sel_font }))
             self.workshopbutton:SetPosition(-450, 285 - 45 - 45)
             self.workshopbutton:SetTextSize(22)
@@ -258,7 +258,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
 
             if GetModConfigData("SaveLog") == 1 and GetModConfigData("AutoSaveLog") == 0  then
                 self.createquick_log = self.root:AddChild(TEMPLATES.IconButton("images/button_icons.xml", "save.tex",
-                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SAVEQUICKLOG, false, true, function()
+                    STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEQUICKLOG, false, true, function()
                         CW_CreateTextFileCommand(text)
                         
                     end,

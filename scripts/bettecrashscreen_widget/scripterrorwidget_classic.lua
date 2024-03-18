@@ -45,8 +45,8 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
 
             {
-                text = InGamePlay() and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MENURELOAD or
-                STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.GAMERELOAD,
+                text = InGamePlay() and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MENURELOAD or
+                STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].GAMERELOAD,
                 cb = function()
                     TheSim:ResetError()
                     SimReset()
@@ -63,7 +63,7 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
         if ThePlayer and ThePlayer.Network:IsServerAdmin() then
         table.insert(buttons, 1,
             {
-                text = STRINGS.UI.MAINSCREEN.SCRIPTERRORRESTART,
+                text = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SCRIPTERRORRESTART,
                 cb = function()
                     TheSim:ResetError()
                     c_reset()

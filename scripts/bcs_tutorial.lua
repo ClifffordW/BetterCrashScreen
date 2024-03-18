@@ -90,7 +90,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
             local locationData = { bettercrashscr_tutorial = false }
             local jsonString = json.encode(locationData)
             self.rewatchbutton = self.fixed_root:AddChild(self.CustomIconButton2("images/button_icons.xml", "undo.tex",
-            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.REWATCH, false, true, function() 
+            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].REWATCH, false, true, function() 
             
             
                 TheSim:SetPersistentString("BetterCrashScreen_tutorial", jsonString, false)
@@ -101,7 +101,13 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
             { font = NEWFONT_OUTLINE, size = 24 }))
 
             self.rewatchbutton:SetScale(0.85)
-            self.rewatchbutton:SetPosition( 550, -280)
+            self.rewatchbutton:SetPosition( 600, -290)
+
+            self.rewatchbutton.text:SetPosition(-100,-50)
+            self.rewatchbutton.text_shadow:SetPosition(-98,-50)
+
+
+
         end
         
         
@@ -165,7 +171,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         local crashbg_anim = self.crashbg:GetAnimState()
 
         self.skipbutton = self.fixed_root:AddChild(self.CustomIconButton2("images/button_icons.xml", "undo.tex",
-        STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SKIP, false, true, function() 
+        STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SKIP, false, true, function() 
         
         
             TheSim:SetPersistentString("BetterCrashScreen_tutorial", jsonString, false)

@@ -99,6 +99,24 @@ if config == true then
 	configuration_options =
 	{
 		
+
+		Title("Language", "Pick langauge"),
+    {
+        name = "language",
+        label = "Language",
+        hover = "",
+        options =
+        {
+            { description = "English", data = "en"},
+            { description = "Portuguese",  data = "pt"},
+
+
+
+        },
+        default = "en"
+
+    },
+
 		Title("Crashscreen", "General Crashscreen Settings"),
     {
         name = "ReduxCrashScreen",

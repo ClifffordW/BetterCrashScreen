@@ -9,6 +9,7 @@ Assets =
 }
 
 GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD = "bettercrashscreen_font_wildcard"
+GLOBAL.TUNING.MODTEST = modname
 
 table.insert(GLOBAL.FONTS, 	{ filename = GLOBAL.resolvefilepath("fonts/crashfont_wildcard.zip"), alias = GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD, fallback = GLOBAL.DEFAULT_FALLBACK_TABLE_OUTLINE })
 
@@ -18,6 +19,7 @@ print("FONT IS "..GetModConfigData("font"))
 
 
 modimport("scripts/strings")
+
 
 
 
@@ -114,7 +116,7 @@ DisplayError = function(error)
         if maincause ~= nil then -- A specific mod had ran into an error...
             if #othercauses > 0 then -- Due to other mods
 
-                disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.MODQUIT -- Disable Mods
+                disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODQUIT -- Disable Mods
                 disablemodsbuttonfn = function() 
                     for i, modname in ipairs(othercauses) do
                         KnownModIndex:Disable(modname)
@@ -126,7 +128,7 @@ DisplayError = function(error)
 
 
 
-                disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODONEQUIT -- Disable Mod
+                disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODONEQUIT -- Disable Mod
                 disablemodsbuttonfn = function()
                     KnownModIndex:Disable(maincause)
                 end
@@ -134,7 +136,7 @@ DisplayError = function(error)
             end
         else -- The game had ran into an error, mods were involved
 
-            disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.MODQUIT -- Disable Mods
+            disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODQUIT -- Disable Mods
             disablemodsbuttonfn = function()
                 for i, modname in ipairs(involvedmods) do -- In this case involvedmods and othercases should be identical, but just in case they are not.
                     KnownModIndex:Disable(modname)
@@ -144,7 +146,7 @@ DisplayError = function(error)
         end
     else -- No mods known to have caused an issue
 
-        disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODALLQUIT -- Disable All Mods
+        disablemodsbuttonstr = STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODALLQUIT -- Disable All Mods
         disablemodsbuttonfn = function()
             KnownModIndex:DisableAllMods()
         end
@@ -169,7 +171,7 @@ DisplayError = function(error)
         --     end})
         -- end
 
-        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.SCRIPTERRORQUIT, cb = function() TheSim:ForceAbort() end})
+        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SCRIPTERRORQUIT, cb = function() TheSim:ForceAbort() end})
 
 
         -- if not ingame then
@@ -189,16 +191,15 @@ DisplayError = function(error)
         if modnameforurl then
             BETTERCRASHSCREEN_CAUSE = modnameforurl
             
-            --table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
+            --table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODPAGE, nopop=true, cb = function() VisitURL("https://steamcommunity.com/sharedfiles/filedetails/?id="..modnameforurl) end })
 
 
         
         end
-        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.MODFORUMS, nopop=true, cb = function() VisitURL("https://forums.kleientertainment.com/forums/forum/79-dont-starve-together-mods-and-tools/") end })
+        table.insert(buttons, {text=STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODFORUMS, nopop=true, cb = function() VisitURL("https://forums.kleientertainment.com/forums/forum/79-dont-starve-together-mods-and-tools/") end })
 
 
         
-
         
 
         
@@ -206,13 +207,13 @@ DisplayError = function(error)
     end
 
     local titlestr = (maincause ~= nil and #involvedmods > 0) and
-        string.format(STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.MODCRASH, maincausemodnamestr) or
+        string.format(STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MODCRASH, maincausemodnamestr) or
         STRINGS.UI.MAINSCREEN.MODFAILTITLE
 
     local modstext = #involvedmods > 0 and
         ((maincause == nil or #othercauses == 0) and
-            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SUSPECTEDMODS..involvedmodnamesstr or
-            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN.SUSPECTEDCONFLICTS..othercausesmodnamesstr
+            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SUSPECTEDMODS..involvedmodnamesstr or
+            STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SUSPECTEDCONFLICTS..othercausesmodnamesstr
         ) or
         STRINGS.UI.MAINSCREEN.SCRIPTERRORMODWARNING..modnamesstr
 
