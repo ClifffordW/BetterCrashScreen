@@ -30,3 +30,26 @@ Debug:
 Summary of build:
 SUCCESS: D:/SteamLibrary/steamapps/common/Don't Starve Together/mods/BetterCrashScreen/sound/tutorial.fev
 SUCCESS: tutorial.fsb
+Warning: QColor::setHsv: HSV parameters out of range
+Debug: "20:51:05 ..\..\src\eventlayerstackwidget.cpp:1465 CX: Delete Sound" 
+Debug: "20:51:13 ..\..\src\eventlayerstackwidget.cpp:1334 CV: Add Sound" 
+Debug: 
+Building project 'tutorial'...
+Debug: Building project D:\SteamLibrary\steamapps\common\Don't Starve Together\mods\BetterCrashScreen\sound\tutorial.fev...
+Debug: Unique sound defs 1/1
+Debug: Retrieving sound file info...
+Debug: Retrieving reverb info...
+Debug: FEV file written ok
+Debug: Unique Envelope Points: 0 of 0
+Debug: Unique Strings: 31 characters of 31
+Debug: Caching sound file details for ''...
+Debug: tutorial_pt.mp3
+Debug: Building 'tutorial.fsb'
+Debug: Encoded D:\SteamLibrary\steamapps\common\Don't Starve Together\mods\BetterCrashScreen\sound\tutorial_pt.mp3
+Debug: Writing FSB...
+Debug: Finished building FSB
+Debug: 
+Debug: 
+Summary of build:
+SUCCESS: D:/SteamLibrary/steamapps/common/Don't Starve Together/mods/BetterCrashScreen/sound/tutorial.fev
+SUCCESS: tutorial.fsb

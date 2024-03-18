@@ -165,10 +165,9 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
 
         
 
-        self.crashbg = self.fixed_root:AddChild(UIAnim())
+        self.crashbg = self.fixed_root:AddChild(Image("images/tutorial.xml", "tutorial_"..TUNING.BETTECRASHSCREEN_LANGUAGE..".tex"))
 
         local crashbg = self.crashbg
-        local crashbg_anim = self.crashbg:GetAnimState()
         crashbg:MoveToFront()
 
         self.skipbutton = self.fixed_root:AddChild(self.CustomIconButton2("images/button_icons.xml", "undo.tex",
@@ -191,9 +190,6 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         
 
 
-        crashbg_anim:SetBank("detectivehayseed_hint")
-        crashbg_anim:SetBuild("detectivehayseed_hint")
-        crashbg_anim:PlayAnimation("bg", true)
         crashbg:SetScale(0.68)
         crashbg:Hide()
 
@@ -231,14 +227,11 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         helparrow:Hide()
         
 
-        for k,v in pairs(self.menu.items) do
-            v:Disable()
+        for k,v in pairs(self.fixed_root.children) do
+            v:Hide()
         end
 
-        for k,v in pairs(self.submenu.items) do
-            v:Disable()
-        end
-        self.motd_panel:Disable()
+        --self.motd_panel:Disable()
 
 
         local vol = 0.75
@@ -325,13 +318,13 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
             end)
             
             --GLobe
-            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 95.252 or 72.2, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 92.252 or 72.2, function()
                 helparrow:SetPosition(x + 50 +  50, 180)
             end)
 
 
             --Disable Mods
-            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 111.663 or 79.4, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 108.663 or 79.4, function()
                 helparrow:SetPosition(x_big + 230, -180)
             end)
             
@@ -372,7 +365,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
             
 
 
-            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 150 or 110.2, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 145 or 110.2, function()
 
                 
 
@@ -443,14 +436,14 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
             end)
 
 
-            self.inst:DoTaskInTime(116, function()
+            self.inst:DoTaskInTime(153, function()
                 self.help_arrow:Hide()
                 TheFrontEnd:Fade(FADE_IN, 2)
                 _sound:SetVolume("FEMusic", 1)
                 
             end)
 
-            self.inst:DoTaskInTime(116.25, function()
+            self.inst:DoTaskInTime(153.25, function()
                 self.help_arrow:Kill()
                 crashbg:Kill()
 
@@ -458,12 +451,8 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
                     self.skipbutton:Kill()
                 end
 
-                for k,v in pairs(self.menu.items) do
-                    v:Enable()
-                end
-        
-                for k,v in pairs(self.submenu.items) do
-                    v:Enable()
+                for k,v in pairs(self.fixed_root.children) do
+                    v:Show()
                 end
                 self.motd_panel:Enable()
                 

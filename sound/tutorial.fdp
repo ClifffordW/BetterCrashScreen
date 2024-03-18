@@ -232,7 +232,7 @@
 <x>0</x>
 <width>1</width>
 <startmode>0</startmode>
-<loopmode>0</loopmode>
+<loopmode>1</loopmode>
 <loopcount2>-1</loopcount2>
 <autopitchenabled>0</autopitchenabled>
 <autopitchparameter>0</autopitchparameter>

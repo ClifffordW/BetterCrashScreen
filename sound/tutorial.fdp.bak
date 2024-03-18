@@ -11,7 +11,7 @@
 <build_programmerreport>0</build_programmerreport>
 <build_applytemplate>0</build_applytemplate>
 <build_continue_on_error>0</build_continue_on_error>
-<currentbank>sound</currentbank>
+<currentbank>tutorial</currentbank>
 <currentlanguage>default</currentlanguage>
 <primarylanguage>default</primarylanguage>
 <language>default</language>
@@ -200,7 +200,7 @@
 <entrylistmode>1</entrylistmode>
 <waveform>
 <filename>tutorial_pt.mp3</filename>
-<soundbankname>sound</soundbankname>
+<soundbankname>tutorial</soundbankname>
 <weight>100</weight>
 <percentagelocked>0</percentagelocked>
 </waveform>
@@ -441,13 +441,13 @@
 <_lang_default_rebuild>0</_lang_default_rebuild>
 </default_soundbank_props>
 <soundbank>
-<name>sound</name>
+<name>tutorial</name>
 <guid>{c7a8bcd1-644b-4033-803f-9c3beb28f1e3}</guid>
 <load_into_rsx>0</load_into_rsx>
 <disable_seeking>0</disable_seeking>
 <enable_syncpoints>1</enable_syncpoints>
 <hasbuiltwithsyncpoints>0</hasbuiltwithsyncpoints>
-<_PC_banktype>DecompressedSample</_PC_banktype>
+<_PC_banktype>Sample</_PC_banktype>
 <_XBOX360_banktype>DecompressedSample</_XBOX360_banktype>
 <_XBOXONE_banktype>DecompressedSample</_XBOXONE_banktype>
 <_PSP_banktype>DecompressedSample</_PSP_banktype>
@@ -515,7 +515,7 @@
 <_BB10_fixedsamplerate>48000</_BB10_fixedsamplerate>
 <notes></notes>
 </waveform>
-<_PC_format>PCM</_PC_format>
+<_PC_format>VORBIS</_PC_format>
 <_PC_quality>50</_PC_quality>
 <_PC_forcesoftware>1</_PC_forcesoftware>
 <_PC_maxstreams>10</_PC_maxstreams>
@@ -568,7 +568,7 @@
 <_BB10_forcesoftware>0</_BB10_forcesoftware>
 <_BB10_maxstreams>10</_BB10_maxstreams>
 <_lang_default_filename_prefix></_lang_default_filename_prefix>
-<_lang_default_rebuild>0</_lang_default_rebuild>
+<_lang_default_rebuild>1</_lang_default_rebuild>
 </soundbank>
 <notes></notes>
 <currentplatform>PC</currentplatform>

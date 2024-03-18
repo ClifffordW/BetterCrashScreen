@@ -7,6 +7,11 @@ Assets =
     Asset("SOUNDPACKAGE", "sound/arrow.fev"),
     Asset("ANIM", "anim/detectivehayseed_hint.zip"),
 
+
+    Asset("ATLAS", "images/tutorial.xml"),
+    Asset("IMAGE", "images/tutorial.tex"),
+
+
     Asset("SOUND", "sound/tutorial.fsb"),
     Asset("SOUNDPACKAGE", "sound/tutorial.fev"),
 }

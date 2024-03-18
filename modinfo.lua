@@ -29,7 +29,7 @@ credits_only = false
 main_icon = "bettercs"
 
 
-priority = 9
+priority = -100
 
 
 

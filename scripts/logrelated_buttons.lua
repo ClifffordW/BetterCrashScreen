@@ -135,7 +135,7 @@ AddClassPostConstruct("widgets/scripterrorwidget",
             self.workshopbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
 
 
-            if not BETTERCRASHSCREEN_CAUSE then
+            if not BETTERCRASHSCREEN_CAUSE    then
                 self.workshopbutton:Hide()
             end
 
