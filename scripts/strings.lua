@@ -16,7 +16,7 @@ end
 
 
 
-TUNING.BETTECRASHSCREEN_LANGUAGE = LOC.GetLocaleCode() or GetModConfigData("language")
+TUNING.BETTECRASHSCREEN_LANGUAGE = GetModConfigData("language")
 
 STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
     en = {

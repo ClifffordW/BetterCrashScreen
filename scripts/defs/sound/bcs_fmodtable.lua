@@ -15,7 +15,14 @@ local fmodtable = {
     voiceover = {
         event = "arrow/sfx/voiceover",
         handle = "voiceover"
-    }
+    },
+
+    voiceover_pt = {
+        event = "tutorial/sfx/voiceover_pt",
+        handle = "voiceover"
+    },
+
+    
 }
 
 

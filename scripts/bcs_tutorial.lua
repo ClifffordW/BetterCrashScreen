@@ -169,6 +169,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
 
         local crashbg = self.crashbg
         local crashbg_anim = self.crashbg:GetAnimState()
+        crashbg:MoveToFront()
 
         self.skipbutton = self.fixed_root:AddChild(self.CustomIconButton2("images/button_icons.xml", "undo.tex",
         STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SKIP, false, true, function() 
@@ -187,7 +188,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         
 
 
-
+        
 
 
         crashbg_anim:SetBank("detectivehayseed_hint")
@@ -265,7 +266,13 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         self.inst:DoTaskInTime(0.5, function()
             _sound:SetVolume("FEMusic", 0)
             cw_PlayFMODEvent("helping_arrow_bg", 0.12)
-            cw_PlayFMODEvent("voiceover", 0.10)
+            if TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" then
+                cw_PlayFMODEvent("voiceover_pt", 0.75)
+            else
+                cw_PlayFMODEvent("voiceover", 0.10)
+
+            end
+            
             crashbg:Show()
         end)
 
@@ -281,50 +288,50 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
 
             
             --Reload
-            self.inst:DoTaskInTime(22.5, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 27.5 or 22.5, function()
                 helparrow:Show()
                 helparrow:SetPosition(x_big, -235)
             end)
 
             --Reload Save
-            self.inst:DoTaskInTime(25.2, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 32.5 or 25.2, function()
                 helparrow:SetPosition(x_big + 225, -235)
             end)
 
             --Reconnect
-            self.inst:DoTaskInTime(33.8, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 43.8 or 33.8, function()
                 helparrow:Show()
                 helparrow:SetPosition(x_big + 225 + 225, -235)
                 
             end)
 
-            --Reconnect
-            self.inst:DoTaskInTime(45.1, function()
+            --Reconnect Hide
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 54.5 or 45.1, function()
                 helparrow:Hide()
                 
             end)
 
 
             --Folder
-            self.inst:DoTaskInTime(49.25, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 62.25 or 49.25, function()
                 helparrow:Show()
                 helparrow:SetPosition(-420, 180)
 
             end)
 
             --Save
-            self.inst:DoTaskInTime(56.4, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 72.189 or 56.4, function()
                 helparrow:SetPosition(x + 50, 180)
             end)
             
             --GLobe
-            self.inst:DoTaskInTime(72.2, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 95.252 or 72.2, function()
                 helparrow:SetPosition(x + 50 +  50, 180)
             end)
 
 
-            --Globe
-            self.inst:DoTaskInTime(79.4, function()
+            --Disable Mods
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 111.663 or 79.4, function()
                 helparrow:SetPosition(x_big + 230, -180)
             end)
             
@@ -339,19 +346,19 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
  
 
 
-            self.inst:DoTaskInTime(86.4, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 118 or 86.4, function()
                 helparrow:Hide()
                
             end)
 
-            self.inst:DoTaskInTime(86.9, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 118.5 or 86.9, function()
                 helparrow:Kill()
                 
                
             end)
 
 
-            self.inst:DoTaskInTime(99, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 130 or 99, function()
                 cw_StopFMODEvent("helping_arrow_bg")
                 TheSim:SetPersistentString("BetterCrashScreen_tutorial", jsonString, false)
 
@@ -365,7 +372,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
             
 
 
-            self.inst:DoTaskInTime(110.2, function()
+            self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 150 or 110.2, function()
 
                 
 

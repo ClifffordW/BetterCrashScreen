@@ -5,11 +5,13 @@ Assets =
 {
     Asset("SOUND", "sound/arrow.fsb"),
     Asset("SOUNDPACKAGE", "sound/arrow.fev"),
-    Asset("ANIM", "anim/detectivehayseed_hint.zip")
+    Asset("ANIM", "anim/detectivehayseed_hint.zip"),
+
+    Asset("SOUND", "sound/tutorial.fsb"),
+    Asset("SOUNDPACKAGE", "sound/tutorial.fev"),
 }
 
 GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD = "bettercrashscreen_font_wildcard"
-GLOBAL.TUNING.MODTEST = modname
 
 table.insert(GLOBAL.FONTS, 	{ filename = GLOBAL.resolvefilepath("fonts/crashfont_wildcard.zip"), alias = GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD, fallback = GLOBAL.DEFAULT_FALLBACK_TABLE_OUTLINE })
 
