@@ -170,19 +170,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         local crashbg = self.crashbg
         crashbg:MoveToFront()
 
-        self.skipbutton = self.fixed_root:AddChild(self.CustomIconButton2("images/button_icons.xml", "undo.tex",
-        STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SKIP, false, true, function() 
-        
-        
-            TheSim:SetPersistentString("BetterCrashScreen_tutorial", jsonString, false)
 
-            TheSim:ResetError()
-            c_reset()
-        end,
-        { font = NEWFONT_OUTLINE, size = 24 }))
-
-
-        self.skipbutton:SetPosition( 450, -250)
 
         
 
@@ -230,6 +218,20 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen",
         for k,v in pairs(self.fixed_root.children) do
             v:Hide()
         end
+
+        self.skipbutton = self.fixed_root:AddChild(self.CustomIconButton2("images/button_icons.xml", "undo.tex",
+        STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SKIP, false, true, function() 
+        
+        
+            TheSim:SetPersistentString("BetterCrashScreen_tutorial", jsonString, false)
+
+            TheSim:ResetError()
+            c_reset()
+        end,
+        { font = NEWFONT_OUTLINE, size = 24 }))
+
+
+        self.skipbutton:SetPosition( 450, -250)
 
         --self.motd_panel:Disable()
 
