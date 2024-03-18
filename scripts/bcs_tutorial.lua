@@ -20,6 +20,93 @@ local sel_font =  type(GetModConfigData("font")) ~= "number" and GetModConfigDat
 
 AddClassPostConstruct("screens/redux/multiplayermainscreen",
     function(self, ...)
+
+
+
+
+        TheSim:GetPersistentString("BetterCrashScreen_updater", function(load_success, data)
+            if load_success and data ~= nil then
+                local status, bcs_data_updater = GLOBAL.pcall(function() return GLOBAL.json.decode(data) end)
+                if status and bcs_data_updater then
+                    self.should_autoupdate_bcs = bcs_data_updater.autoupdate
+                    self.seen_autoupdate_bcs = bcs_data_updater.wasseen
+    
+                    self.loaded = true
+                end
+            end
+        end)
+
+   
+
+
+        if self.should_autoupdate_bcs and modname then
+            print(modname)
+            TheFrontEnd.overlayroot.inst:DoTaskInTime(2, function()
+
+
+
+                if IsWorkshopMod(modname) and modname.version ~= "" and modname.version ~= KnownModIndex:GetModInfo(modname).version then
+                    TheSim:UpdateWorkshopMod(modname)
+                    print("[Workshop] Updating: "..modname)
+
+
+                end
+
+
+            end)
+
+            
+
+
+
+        end
+
+
+        local PopupDialogScreen = require "screens/redux/popupdialog"
+
+        if not self.seen_autoupdate_bcs then
+            self.inst:DoTaskInTime(0.5, function()
+                TheFrontEnd:PushScreen(PopupDialogScreen("Better Crash Screen Update",
+                    "Would you like the mod to get autoupdated everytime it gets update?",
+                    {
+                        { text = "Yes", cb = function()
+                            local locationData = { autoupdate = true, wasseen = true }
+                            local jsonString = GLOBAL.json.encode(locationData)
+                        
+                            GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_updater", jsonString, false)
+                            
+                            TheFrontEnd:PopScreen()
+                        end },
+
+                        { text = "No", cb = function()
+                            local locationData = { autoupdate = false, wasseen = true }
+                            local jsonString = GLOBAL.json.encode(locationData)
+                        
+                            GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_updater", jsonString, false)
+
+                            TheFrontEnd:PopScreen()
+                        end },
+                    }))
+                end)
+
+        end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         local Menu = require "widgets/menu"
         local Button = require "widgets/button"
         local AnimButton = require "widgets/animbutton"
