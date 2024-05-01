@@ -1,0 +1,16 @@
+name: Crash Log Notification
+on:
+  push:
+    paths:
+      - 'crash_logs/**'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Send Notification
+        run: |
+          # Add your script to send notifications here
+          # This could be an email, a message on Discord, Slack, etc.
