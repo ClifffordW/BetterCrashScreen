@@ -41,8 +41,38 @@ AddClassPostConstruct(
 		local button_y = closerto_log and 185 or 275
 		local has_classicframe = GetModConfigData("ClassicFrame")
 
+
+
+		
+
+
+
 		local function CW_CreateTextFileCommand(text)
+			local HideSensInfo = GetModConfigData("HideSensationalInfo") == 0
+
+			local Username, KU = TheNet:GetLocalUserName(), HideSensInfo and TheNet:GetUserID() or "CLASSIFIED"
+			
+
+			local SteamID = HideSensInfo and TheSim:GetSteamIDNumber() or "CLASSIFIED"
+			local is64bit = APP_ARCHITECTURE == "x32" and "32-bit" or APP_ARCHITECTURE == "x64" and "64-bit" or "??-bit"
+			local ingamecrash = InGamePlay() and "Yes" or "No"
+			local currentscreen = tostring(TheFrontEnd:GetActiveScreen())
+
+			local function CollectUserData()
+				return "Modname: " .. modname ..
+				"\nUser: " .. Username .." \nKUID: "..KU.."\nSteamID32: "..SteamID.."\n".. 
+				"\nSystem: " .. PLATFORM ..
+				"\nGame Info: " .. TheSim:GetSteamBetaBranchName() .. 
+				" branch (" .. tostring(is64bit) .. ") v" 
+				.. APP_VERSION
+				.."\nCrash During Gameplay: "..ingamecrash
+				.."\nScreen: "..currentscreen
+			
+			end
+
 			local modname = KnownModIndex:GetModFancyName(modname)
+
+			local userinfo = CollectUserData()
 
 			local currentDateTime = os.date("*t")
 
@@ -65,7 +95,7 @@ AddClassPostConstruct(
 
 			local file = "quick_log_" .. whichfile .. " " .. formattedDateTime .. ".txt"
 
-			TheSim:SetPersistentString("../" .. file, text, false, function(succ)
+			TheSim:SetPersistentString("../" .. file, "\n\n"..userinfo.."\n\n"..text, false, function(succ)
 				if succ then
 					self.infotext:SetString(file .. " created.")
 					if GetModConfigData("OpenSaveFolder") == 1 then
