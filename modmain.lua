@@ -19,11 +19,16 @@ table.insert(GLOBAL.FONTS, {
 	fallback = GLOBAL.DEFAULT_FALLBACK_TABLE_OUTLINE,
 })
 
+
+
 AddGamePostInit(GLOBAL.LoadFonts)
 
 --print("FONT IS " .. GetModConfigData("font"))
 
 modimport("scripts/strings")
+
+
+modimport("scripts/autoenable")
 
 modimport("scripts/autoreconnect")
 if GetModConfigData("ReduxCrashScreen") ~= "redux" then

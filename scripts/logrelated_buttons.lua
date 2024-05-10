@@ -57,9 +57,11 @@ AddClassPostConstruct(
 			local is64bit = APP_ARCHITECTURE == "x32" and "32-bit" or APP_ARCHITECTURE == "x64" and "64-bit" or "??-bit"
 			local ingamecrash = InGamePlay() and "Yes" or "No"
 			local currentscreen = tostring(TheFrontEnd:GetActiveScreen())
+			local modname_fancy = KnownModIndex:GetModFancyName(modname)
+
 
 			local function CollectUserData()
-				return "Modname: " .. modname ..
+				return "Modname: " .. modname_fancy.." ("..string.gsub(modname, "workshop%-", "")..")"..
 				"\nUser: " .. Username .." \nKUID: "..KU.."\nSteamID32: "..SteamID.."\n".. 
 				"\nSystem: " .. PLATFORM ..
 				"\nGame Info: " .. TheSim:GetSteamBetaBranchName() .. 

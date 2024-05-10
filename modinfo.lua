@@ -4,7 +4,7 @@ name = "Better Crash Screen"
 
 author = "Niko"
 
-version = "1.21.0"
+version = "2.1.1"
 
 config = true
 Language = "en"
@@ -271,9 +271,12 @@ Improves the crash screen to give more detailed information and makes it easier 
 
 	changelog = [[󰀏 What's New:
 
-󰀈 Quick log now contains more information
-(SteamID/KUID is shown in the quicklog you can disable that in modconfig)
+󰀈 Added Save Mods in Modsettings
+(Check Steam Comments)
 
+󰀈 Adjusted Saving Mods and UnSave
+
+󰀈 Small update regarding modname in quicklog
 ]]
 
 	--copyright = "Copyright © 2020 "..old_author
