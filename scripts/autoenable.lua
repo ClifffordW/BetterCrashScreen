@@ -18,6 +18,8 @@ local function HeyVSauceMichaelHere()
             local status, bettercrashscr = pcall(function() return json.decode(data) end)
             if status and bettercrashscr then
                 bettercrashscr_enabledmods = bettercrashscr.bettercrashscr_enabledmods
+                bettercrashscr_mimenabledmods = bettercrashscr.bettercrashscr_mimenabledmods
+
                 loaded = true
             end
         end
@@ -30,7 +32,11 @@ end
 AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
     local TEXT_OFFSET = 100
 
+    local is_mim_enabled = KnownModIndex.IsMiMEnabled and true or false
+
     local tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
+    local tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
+
 
     local TEMPLATES = require("widgets/redux/templates")
     self.saveperistentmods = self.root:AddChild(
@@ -43,9 +49,24 @@ AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
             function()
                 HeyVSauceMichaelHere()
                 tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
+                tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
 
                 local mymods = KnownModIndex:GetModsToLoad()
-                local locationData = { bettercrashscr_enabledmods = tableexists and {} or mymods }
+                local mymods_mim = KnownModIndex:GetMiMMods()
+
+                if is_mim_enabled then
+                    local keys = {}
+
+                    for k in pairs(mymods_mim) do 
+                        table.insert(keys, k)
+                    end
+
+                    mymods_mim = keys
+
+                end
+
+
+                local locationData = { bettercrashscr_enabledmods = tableexists and {} or mymods, bettercrashscr_mimenabledmods = tableexists_mim and {} or mymods_mim,  }
                 local jsonString = json.encode(locationData)
                 TheSim:SetPersistentString("BetterCrashScreen_EnabledMods", jsonString, false,
                     function()
@@ -76,6 +97,9 @@ AddClassPostConstruct("screens/redux/mainscreen", function(self, ...)
         HeyVSauceMichaelHere()
 
         local tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
+        local tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
+        local is_mim_enabled = KnownModIndex.IsMiMEnabled and true or false
+
 
         local PopupDialogScreenRedux = require "screens/redux/popupdialog"
         local modstoenable
@@ -88,16 +112,26 @@ AddClassPostConstruct("screens/redux/mainscreen", function(self, ...)
 
 
 
-
-
-        if not tableexists then return end
+        print(tableexists)
+        if not tableexists or (is_mim_enabled and not tableexists_mim) then return end
 
         local isenabled = nil
+        local isenabled_mim = nil
+        local autoenablemim = GetModConfigData("autoenablemim") == 1
+
 
         local function EnableDemMods(v)
+
+            
             for _, v in pairs(bettercrashscr_enabledmods) do
                 KnownModIndex:Enable(v)
             end
+            if is_mim_enabled then
+                for _, v in pairs(bettercrashscr_mimenabledmods) do
+                    KnownModIndex:MiMEnable(v)
+                end
+            end
+            
 
             KnownModIndex:Save()
             TheSim:ResetError()
@@ -106,6 +140,12 @@ AddClassPostConstruct("screens/redux/mainscreen", function(self, ...)
         for _, v in pairs(bettercrashscr_enabledmods) do
             isenabled = KnownModIndex:IsModEnabled(v)
         end
+        if is_mim_enabled then
+            for _, v in pairs(bettercrashscr_mimenabledmods) do
+                isenabled_mim = KnownModIndex:IsMiMEnabled(v)
+            end
+        end
+        
 
 
 
@@ -117,10 +157,12 @@ AddClassPostConstruct("screens/redux/mainscreen", function(self, ...)
 
 
 
+        if not isenabled or (is_mim_enabled and not isenabled_mim)  then
 
-        if not isenabled then
-            local dialogue = PopupDialogScreenRedux("Mods are disabled!",
-                "Your mods are disabled would you like to re-enable them?.", {
+            
+
+            local dialogue = PopupDialogScreenRedux((is_mim_enabled and not isenabled_mim) and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].TITLE_MIMMODSDISABLED or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].TITLE_NORMALMODSDISABLED,
+                    (is_mim_enabled and not isenabled_mim) and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MIMMODSDISABLED or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].NORMALMODSDISABLED, {
                     {
                         text = "Yes",
                         cb = function()

@@ -4,7 +4,7 @@ name = "Better Crash Screen"
 
 author = "Niko"
 
-version = "2.1.1"
+version = "2.12.0"
 
 config = true
 Language = "en"
@@ -271,12 +271,8 @@ Improves the crash screen to give more detailed information and makes it easier 
 
 	changelog = [[󰀏 What's New:
 
-󰀈 Added Save Mods in Modsettings
-(Check Steam Comments)
-
-󰀈 Adjusted Saving Mods and UnSave
-
-󰀈 Small update regarding modname in quicklog
+󰀈 AutoSave mods now has PT translation
+󰀈 AutoSave mods works with MiM Mods
 ]]
 
 	--copyright = "Copyright © 2020 "..old_author

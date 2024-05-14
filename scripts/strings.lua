@@ -40,6 +40,12 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
         MODQUIT = "Disable Mods",
         SCRIPTERRORRESTART = "Reload Save",
 
+
+        TITLE_MIMMODSDISABLED = "MiM mods are disabled!",
+        MIMMODSDISABLED = "MiM mods are disabled would you like to re-enable them?.",
+
+        TITLE_NORMALMODSDISABLED = "Mods are disabled!",
+        NORMALMODSDISABLED = "Your mods are disabled would you like to re-enable them?.",
         
     },
 
@@ -63,6 +69,14 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
         MODFORUMS = "Fóruns do Mod",
         MODQUIT = "Desativar Mods",
         SCRIPTERRORRESTART = "Recarregar Salvar",
+
+
+        TITLE_MIMMODSDISABLED = "Mods MiM estão desativados!",
+        MIMMODSDISABLED = "Os mods MiM estão desativados, você gostaria de reativá-los?",
+    
+        TITLE_NORMALMODSDISABLED = "Mods estão desativados!",
+        NORMALMODSDISABLED = "Seus mods estão desativados, você gostaria de reativá-los?",
+
     },
     
 }
