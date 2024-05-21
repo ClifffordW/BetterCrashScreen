@@ -9,19 +9,10 @@ Assets = {
 	Asset("SOUND", "sound/tutorial.fsb"),
 	Asset("SOUNDPACKAGE", "sound/tutorial.fev"),
 }
-table.insert(Assets, Asset("FONT", "fonts/crashfont_wildcard.zip"))
-
-GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD = "crashfont_wildcard"
-
-table.insert(GLOBAL.FONTS, {
-	filename = GLOBAL.resolvefilepath("fonts/crashfont_wildcard.zip"),
-	alias = GLOBAL.BETTERCRASHSCREEN_FONT_WILDCARD,
-	fallback = GLOBAL.DEFAULT_FALLBACK_TABLE_OUTLINE,
-})
 
 
 
-AddGamePostInit(GLOBAL.LoadFonts)
+
 
 --print("FONT IS " .. GetModConfigData("font"))
 

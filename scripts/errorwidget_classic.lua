@@ -2,7 +2,7 @@ local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
 
-local sel_font = type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or BODYTEXTFONT
+local sel_font = (env.GetModConfigData("bettercrashscreen_fonts") == 1 and type(env.GetModConfigData("font")) ~= "number") and env.GetModConfigData("font") or BODYTEXTFONT
 
 
 env.AddClassPostConstruct("widgets/scripterrorwidget",
@@ -124,6 +124,6 @@ env.AddClassPostConstruct("widgets/scripterrorwidget",
 
         self.additionaltext:SetFont(sel_font)
         self.text:SetFont(sel_font)
-        self.title:SetFont(type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or
+        self.title:SetFont(env.GetModConfigData("bettercrashscreen_fonts") == 1 and type(env.GetModConfigData("font")) ~= "number" and env.GetModConfigData("font") or
         BODYTEXTFONT)
     end)

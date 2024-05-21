@@ -17,7 +17,7 @@ AddClassPostConstruct(
 	function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, error, ...)
 		local Text = require("widgets/text")
 
-		local sel_font = type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or BODYTEXTFONT
+		local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or BODYTEXTFONT
 
 		--text
 
@@ -210,7 +210,7 @@ AddClassPostConstruct(
 		end
 		if GetModConfigData("ReduxCrashScreen") == "redux" then
 			local TEXT_OFFSET = 125
-			local sel_font = type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or HEADERFONT
+			local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or HEADERFONT
 
 			--text
 

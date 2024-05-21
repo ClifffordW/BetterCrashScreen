@@ -4,7 +4,7 @@ name = "Better Crash Screen"
 
 author = "Niko"
 
-version = "2.12.0"
+version = "2.15"
 
 config = true
 Language = "en"
@@ -120,10 +120,11 @@ if config == true then
 				{ description = "Tradein guy font", data = "TALKINGFONT_TRADEIN" },
 				{ description = "Hermit's font", data = "TALKINGFONT_HERMIT" },
 				{ description = "PT Mono", data = "PTMONO" },
-				{ description = "Wildcard", data = "BETTERCRASHSCREEN_FONT_WILDCARD" },
 			},
 			default = 0,
 		},
+
+
 
 		{
 			name = "nostalgia",
@@ -271,8 +272,8 @@ Improves the crash screen to give more detailed information and makes it easier 
 
 	changelog = [[󰀏 What's New:
 
-󰀈 AutoSave mods now has PT translation
-󰀈 AutoSave mods works with MiM Mods
+󰀈 Removed Wcard font
+
 ]]
 
 	--copyright = "Copyright © 2020 "..old_author

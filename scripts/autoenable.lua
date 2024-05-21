@@ -32,6 +32,7 @@ end
 AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
     local TEXT_OFFSET = 100
 
+    local mymods_mim
     local is_mim_enabled = KnownModIndex.IsMiMEnabled and true or false
 
     local tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
@@ -52,9 +53,9 @@ AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
                 tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
 
                 local mymods = KnownModIndex:GetModsToLoad()
-                local mymods_mim = KnownModIndex:GetMiMMods()
+                mymods_mim = is_mim_enabled and KnownModIndex:GetMiMMods() or nil
 
-                if is_mim_enabled then
+                if is_mim_enabled and mymods_mim then
                     local keys = {}
 
                     for k in pairs(mymods_mim) do 

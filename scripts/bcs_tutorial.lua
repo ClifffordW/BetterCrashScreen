@@ -12,7 +12,7 @@ do
 	_G = GLOBAL
 end
 
-local sel_font = type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or HEADERFONT
+local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or HEADERFONT
 
 AddClassPostConstruct("screens/redux/multiplayermainscreen", function(self, ...)
 	TheSim:GetPersistentString("BetterCrashScreen_updater", function(load_success, data)

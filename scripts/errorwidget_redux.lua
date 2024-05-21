@@ -12,7 +12,7 @@ do
 	_G = GLOBAL
 end
 
-local sel_font = type(GetModConfigData("font")) ~= "number" and GetModConfigData("font") or HEADERFONT
+local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or HEADERFONT
 
 AddClassPostConstruct(
 	"widgets/scripterrorwidget",
@@ -32,6 +32,9 @@ AddClassPostConstruct(
 
 		self.black:SetTint(0, 0, 0, 0.75)
 		-- local title = "Error in the Constant"
+
+
+
 
 		self.title:SetFont(sel_font)
 		self.title:SetString(title)
