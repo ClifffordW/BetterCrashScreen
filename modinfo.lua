@@ -4,7 +4,7 @@ name = "Better Crash Screen"
 
 author = "Niko"
 
-version = "2.15"
+version = "2.16.2"
 
 config = true
 Language = "en"
@@ -58,6 +58,29 @@ modinfo_ver = "2.0"
 if config == true then
 	--Config
 	configuration_options = {
+
+		Title("Mod Saving", "Saved Mod settings"),
+		{
+			name = "autoapply",
+			label = "Auto Enable Mods",
+			hover = "Auto Enables Mods\n(Instead of Popup Dialog)",
+			options = {
+				{ description = "Enabled", data = 1 },
+				{ description = "Disabled", data = 0 },
+			},
+			default = 0,
+		},
+
+		{
+			name = "autoapply_mim",
+			label = "Auto Enable MiM Mods",
+			hover = "Auto Enables Mods in Menu Mods\n(Instead of Popup Dialog)",
+			options = {
+				{ description = "Enabled", data = 1 },
+				{ description = "Disabled", data = 0 },
+			},
+			default = 0,
+		},
 
 		Title("Language", "Pick langauge"),
 		{
@@ -272,7 +295,9 @@ Improves the crash screen to give more detailed information and makes it easier 
 
 	changelog = [[󰀏 What's New:
 
-󰀈 Removed Wcard font
+󰀈 Added Config option to autoenable saved mods instead of popup dialog
+󰀈 Save Mods button has been moved next to Apply Mods
+󰀈 The game will now attempt to redownload missing mod when the mods get autoenabled
 
 ]]
 
