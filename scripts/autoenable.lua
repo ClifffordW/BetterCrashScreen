@@ -42,99 +42,105 @@ AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
     local TEMPLATES = require("widgets/redux/templates")
 
     
+    if GetModConfigData("savemodspos") == 0 then 
+        self.saveperistentmods_big = self.optionspanel:AddChild(TEMPLATES.StandardButton(nil, tableexists == true and "Clear Saved Mods" or "Save Mods"))
+        self.saveperistentmods_big:SetScale(.7)
+        self.saveperistentmods_big:SetPosition(105, -310)
 
-    self.saveperistentmods_big = self.optionspanel:AddChild(TEMPLATES.StandardButton(nil, tableexists == true and "Clear Saved Mods" or "Save Mods"))
-    self.saveperistentmods_big:SetScale(.7)
-    self.saveperistentmods_big:SetPosition(105, -310)
-
-    
-
-
-
-    self.saveperistentmods_big.onclick = function ()
-
-
-        HeyVSauceMichaelHere()
-                tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
-                tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
-
-                local mymods = KnownModIndex:GetModsToLoad()
-                mymods_mim = is_mim_enabled and KnownModIndex:GetMiMMods() or nil
-
-                if is_mim_enabled and mymods_mim then
-                    local keys = {}
-
-                    for k in pairs(mymods_mim) do 
-                        table.insert(keys, k)
-                    end
-
-                    mymods_mim = keys
-
-                end
-
-
-                local locationData = { bettercrashscr_enabledmods = tableexists and {} or mymods, bettercrashscr_mimenabledmods = tableexists_mim and {} or mymods_mim,  }
-                local jsonString = json.encode(locationData)
-                TheSim:SetPersistentString("BetterCrashScreen_EnabledMods", jsonString, false,
-                    function()
-
-                        self.saveperistentmods_big.text:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
-                    end)
         
-    end
 
 
 
-    --[[ self.saveperistentmods = self.root:AddChild(
-        TEMPLATES.IconButton(
-            "images/button_icons.xml",
-            "save.tex",
-            tableexists == true and "Clear Saved Mods" or "Save Mods",
-            false,
-            true,
-            function()
-                HeyVSauceMichaelHere()
-                tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
-                tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
+        self.saveperistentmods_big.onclick = function ()
 
-                local mymods = KnownModIndex:GetModsToLoad()
-                mymods_mim = is_mim_enabled and KnownModIndex:GetMiMMods() or nil
 
-                if is_mim_enabled and mymods_mim then
-                    local keys = {}
+            HeyVSauceMichaelHere()
+                    tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
+                    tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
 
-                    for k in pairs(mymods_mim) do 
-                        table.insert(keys, k)
+                    local mymods = KnownModIndex:GetModsToLoad()
+                    mymods_mim = is_mim_enabled and KnownModIndex:GetMiMMods() or nil
+
+                    if is_mim_enabled and mymods_mim then
+                        local keys = {}
+
+                        for k in pairs(mymods_mim) do 
+                            table.insert(keys, k)
+                        end
+
+                        mymods_mim = keys
+
                     end
 
-                    mymods_mim = keys
 
-                end
+                    local locationData = { bettercrashscr_enabledmods = tableexists and {} or mymods, bettercrashscr_mimenabledmods = tableexists_mim and {} or mymods_mim,  }
+                    local jsonString = json.encode(locationData)
+                    TheSim:SetPersistentString("BetterCrashScreen_EnabledMods", jsonString, false,
+                        function()
+
+                            self.saveperistentmods_big.text:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
+                        end)
+            
+        end
+
+    else
 
 
-                local locationData = { bettercrashscr_enabledmods = tableexists and {} or mymods, bettercrashscr_mimenabledmods = tableexists_mim and {} or mymods_mim,  }
-                local jsonString = json.encode(locationData)
-                TheSim:SetPersistentString("BetterCrashScreen_EnabledMods", jsonString, false,
-                    function()
-                        self.saveperistentmods.text:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
-                        self.saveperistentmods.text_shadow:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
-                    end)
-            end,
-            { font = HEADERFONT }
+
+
+
+        self.saveperistentmods = self.root:AddChild(
+            TEMPLATES.IconButton(
+                "images/button_icons.xml",
+                "save.tex",
+                tableexists == true and "Clear Saved Mods" or "Save Mods",
+                false,
+                true,
+                function()
+                    HeyVSauceMichaelHere()
+                    tableexists = type(bettercrashscr_enabledmods) == "table" and next(bettercrashscr_enabledmods) ~= nil
+                    tableexists_mim = type(bettercrashscr_mimenabledmods) == "table" and next(bettercrashscr_mimenabledmods) ~= nil
+
+                    local mymods = KnownModIndex:GetModsToLoad()
+                    mymods_mim = is_mim_enabled and KnownModIndex:GetMiMMods() or nil
+
+                    if is_mim_enabled and mymods_mim then
+                        local keys = {}
+
+                        for k in pairs(mymods_mim) do 
+                            table.insert(keys, k)
+                        end
+
+                        mymods_mim = keys
+
+                    end
+
+
+                    local locationData = { bettercrashscr_enabledmods = tableexists and {} or mymods, bettercrashscr_mimenabledmods = tableexists_mim and {} or mymods_mim,  }
+                    local jsonString = json.encode(locationData)
+                    TheSim:SetPersistentString("BetterCrashScreen_EnabledMods", jsonString, false,
+                        function()
+                            self.saveperistentmods.text:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
+                            self.saveperistentmods.text_shadow:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
+                        end)
+                end,
+                { font = HEADERFONT }
+            )
         )
-    )
-    self.saveperistentmods:SetPosition(-255, 325)
-    self.saveperistentmods:SetTextSize(22)
-    self.saveperistentmods.text:SetPosition(TEXT_OFFSET, 0)
-    self.saveperistentmods.text_shadow:SetPosition(TEXT_OFFSET + 2, 0)
-    self.saveperistentmods:SetScale(0.89)
-    self.saveperistentmods.text:SetHAlign(ANCHOR_MIDDLE)
-    self.saveperistentmods.text_shadow:SetHAlign(ANCHOR_MIDDLE)
+        self.saveperistentmods:SetPosition(-255, 325)
+        self.saveperistentmods:SetTextSize(22)
+        self.saveperistentmods.text:SetPosition(TEXT_OFFSET, 0)
+        self.saveperistentmods.text_shadow:SetPosition(TEXT_OFFSET + 2, 0)
+        self.saveperistentmods:SetScale(0.89)
+        self.saveperistentmods.text:SetHAlign(ANCHOR_MIDDLE)
+        self.saveperistentmods.text_shadow:SetHAlign(ANCHOR_MIDDLE)
 
-    self.saveperistentmods:SetTextColour(255, 255, 255, 1)
+        self.saveperistentmods:SetTextColour(255, 255, 255, 1)
 
-    self.saveperistentmods.text:SetHAlign(ANCHOR_LEFT)
-    self.saveperistentmods.text_shadow:SetHAlign(ANCHOR_LEFT) ]]
+        self.saveperistentmods.text:SetHAlign(ANCHOR_LEFT)
+        self.saveperistentmods.text_shadow:SetHAlign(ANCHOR_LEFT)
+
+    end
 end)
 
 

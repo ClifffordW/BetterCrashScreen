@@ -4,7 +4,7 @@ name = "Better Crash Screen"
 
 author = "Niko"
 
-version = "2.16.2"
+version = "2.17.0"
 
 config = true
 Language = "en"
@@ -71,6 +71,8 @@ if config == true then
 			default = 0,
 		},
 
+
+
 		{
 			name = "autoapply_mim",
 			label = "Auto Enable MiM Mods",
@@ -78,6 +80,17 @@ if config == true then
 			options = {
 				{ description = "Enabled", data = 1 },
 				{ description = "Disabled", data = 0 },
+			},
+			default = 0,
+		},
+
+		{
+			name = "savemodspos",
+			label = "Save Mods Button Position",
+			hover = "Changes position of Save Mods",
+			options = {
+				{ description = "Top Left", data = 1 },
+				{ description = "Next to Apply", data = 0 },
 			},
 			default = 0,
 		},
@@ -295,9 +308,8 @@ Improves the crash screen to give more detailed information and makes it easier 
 
 	changelog = [[󰀏 What's New:
 
-󰀈 Added Config option to autoenable saved mods instead of popup dialog
-󰀈 Save Mods button has been moved next to Apply Mods
-󰀈 The game will now attempt to redownload missing mod when the mods get autoenabled
+󰀈 Added option to move the Save Mods back to original position
+
 
 ]]
 
