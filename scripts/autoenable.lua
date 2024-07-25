@@ -28,7 +28,7 @@ end
 
 
 
---This code is so terrible, hopefully i will never be able to write this code again
+--This code is so terrible, hopefully i will never be able to write this code again 这个代码太可怕了，希望我再也写不出这个代码了
 AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
     local TEXT_OFFSET = 100
 
@@ -43,7 +43,7 @@ AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
 
     
     if GetModConfigData("savemodspos") == 0 then 
-        self.saveperistentmods_big = self.optionspanel:AddChild(TEMPLATES.StandardButton(nil, tableexists == true and "Clear Saved Mods" or "Save Mods"))
+        self.saveperistentmods_big = self.optionspanel:AddChild(TEMPLATES.StandardButton(nil, tableexists == true and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_CLEAR or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_SAVE))
         self.saveperistentmods_big:SetScale(.7)
         self.saveperistentmods_big:SetPosition(105, -310)
 
@@ -78,7 +78,7 @@ AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
                     TheSim:SetPersistentString("BetterCrashScreen_EnabledMods", jsonString, false,
                         function()
 
-                            self.saveperistentmods_big.text:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
+                            self.saveperistentmods_big.text:SetString(tableexists == true and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_SAVE or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_CLEAR)
                         end)
             
         end
@@ -93,7 +93,7 @@ AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
             TEMPLATES.IconButton(
                 "images/button_icons.xml",
                 "save.tex",
-                tableexists == true and "Clear Saved Mods" or "Save Mods",
+                tableexists == true and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_CLEAR or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_SAVE,
                 false,
                 true,
                 function()
@@ -120,8 +120,8 @@ AddClassPostConstruct("screens/redux/modsscreen", function(self, ...)
                     local jsonString = json.encode(locationData)
                     TheSim:SetPersistentString("BetterCrashScreen_EnabledMods", jsonString, false,
                         function()
-                            self.saveperistentmods.text:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
-                            self.saveperistentmods.text_shadow:SetString(tableexists == true and "Save Mods" or "Clear Saved Mods")
+                            self.saveperistentmods.text:SetString(tableexists == true and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_SAVE or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_CLEAR)
+                            self.saveperistentmods.text_shadow:SetString(tableexists == true and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_SAVE or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].SAVEPERISTENTMODS_CLEAR)
                         end)
                 end,
                 { font = HEADERFONT }
@@ -232,12 +232,12 @@ AddClassPostConstruct("screens/redux/mainscreen", function(self, ...)
             local dialogue = PopupDialogScreenRedux((is_mim_enabled and not isenabled_mim) and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].TITLE_MIMMODSDISABLED or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].TITLE_NORMALMODSDISABLED,
                     (is_mim_enabled and not isenabled_mim) and STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].MIMMODSDISABLED or STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN[TUNING.BETTECRASHSCREEN_LANGUAGE].NORMALMODSDISABLED, {
                     {
-                        text = "Yes",
+                        text = STRINGS.UI.MAINSCREEN.YES,
                         cb = function()
                             EnableDemMods(v)
                         end
                     }, {
-                    text = "No",
+                    text = STRINGS.UI.MAINSCREEN.NO,
                     cb = function()
                         TheFrontEnd:PopScreen()
                     end

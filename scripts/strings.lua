@@ -46,7 +46,9 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
         TITLE_NORMALMODSDISABLED = "Mods are disabled!",
         NORMALMODSDISABLED = "Your mods are disabled would you like to re-enable them?.",
-        
+
+        SAVEPERISTENTMODS_SAVE = "Save Mods",
+        SAVEPERISTENTMODS_CLEAR = "Clear Saved Mods"
     },
 
     pt = { -- Portuguese translation
@@ -73,16 +75,41 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
         TITLE_MIMMODSDISABLED = "Mods MiM estão desativados!",
         MIMMODSDISABLED = "Os mods MiM estão desativados, você gostaria de reativá-los?",
-    
+
         TITLE_NORMALMODSDISABLED = "Mods estão desativados!",
         NORMALMODSDISABLED = "Seus mods estão desativados, você gostaria de reativá-los?",
-
     },
-    
+
+    zh = {
+        MODCRASH = "%s 崩溃!",
+        SUSPECTEDMODS = "可能的原因:\n",
+        SUSPECTEDCONFLICTS = "可能的Mod冲突:\n",
+        MODALLQUIT = "禁用所有模组",
+        MODONEQUIT = "关闭模组",
+        RETURNTOMENU = "返回到菜单页面",
+        GAMERELOAD = "重新加载游戏",
+        RECONNECT = "重新连接",
+        CLIENTLOG_LOC = "客户端日志位置\n(返回到上级目录)",
+        SAVEQUICKLOG = "保存精简日志\n(保存在DST的数据文件夹中)",
+        SAVEDQUICKLOG = "已在DST的数据文件夹中创建精简日志",
+        MODPAGE = "创意工坊页面",
+        SKIP = "跳过",
+        REWATCH = "重新观看BCS教程",
+        SCRIPTERRORQUIT = "退出游戏",
+        SCRIPTERRORMODWARNING = "此错误可能是由于您启用的模块导致的！",
+        MODFORUMS = "模组论坛",
+        MODQUIT = "关闭模组",
+        SCRIPTERRORRESTART = "保存并重新加载",
+
+
+        TITLE_MIMMODSDISABLED = "MiM模组被禁用！",
+        MIMMODSDISABLED = "MiM模组被禁用，您想重新启用它吗？",
+
+        TITLE_NORMALMODSDISABLED = "MOD被禁用！",
+        NORMALMODSDISABLED = "你的MOD被禁用了，你想重新启用它们吗？",
+
+        SAVEPERISTENTMODS_SAVE = "保存已启用的mod",
+        SAVEPERISTENTMODS_CLEAR = "清除保存的mod"
+    },
+
 }
-
-    
-
-    
-
-
