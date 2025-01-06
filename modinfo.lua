@@ -8,7 +8,7 @@ name = en_zh("Better Crash Screen","更好的崩溃提示")
 
 author = "Niko"
 
-version = "2.18.0"
+version = "2.3.0"
 
 config = true
 -- Language = "en"
@@ -310,15 +310,15 @@ end
 
 --Description Components 描述组件
 	desc = en_zh(
-		"Improves the crash screen to give more detailed information and makes it easier to understand.",
-		"改进了崩溃提示页面，以提供更详细的信息，使其更容易理解。")
+		"Added Log sender.",
+		"新增日志发送器。")
 
 	changelog = en_zh(
 
 -- English translation
 [[󰀏 What's New:
 
-󰀈 Add Chinese translation
+󰀈 Added Chinese translation
 
 
 ]],

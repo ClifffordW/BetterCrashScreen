@@ -6,8 +6,7 @@ Assets = {
 	Asset("ATLAS", "images/tutorial.xml"),
 	Asset("IMAGE", "images/tutorial.tex"),
 
-	Asset("SOUND", "sound/tutorial.fsb"),
-	Asset("SOUNDPACKAGE", "sound/tutorial.fev"),
+
 }
 
 
@@ -32,8 +31,84 @@ modimport("scripts/logrelated_buttons")
 modimport("scripts/smallbonus")
 modimport("scripts/bcs_tutorial")
 
-local env = env
-GLOBAL.setfenv(1, GLOBAL)
+do
+    local GLOBAL = GLOBAL
+    local modEnv = GLOBAL.getfenv(1)
+    local rawget, setmetatable = GLOBAL.rawget, GLOBAL.setmetatable
+    setmetatable(modEnv, {
+        __index = function(self, index)
+            return rawget(GLOBAL, index)
+        end,
+        -- lack of __newindex means it defaults to modEnv, so we don't mess up globals.
+    })
+
+    _G = GLOBAL
+end
+
+
+
+local logsender_seen_autosendlogs
+local logsender_should_autosendlogs
+
+	TheSim:GetPersistentString("BetterCrashScreen_logsender", function(load_success, data)
+		if load_success and data ~= nil then
+			local status, bcs_data_logsender
+			= GLOBAL.pcall(function()
+				return GLOBAL.json.decode(data)
+			end)
+			if status and bcs_data_logsender then
+				logsender_should_autosendlogs = bcs_data_logsender.sendlogs
+				logsender_seen_autosendlogs = bcs_data_logsender.wasseen
+
+			end
+		end
+	end)
+
+
+
+	local PopupDialogScreen = require("screens/redux/popupdialog")
+
+	if not logsender_seen_autosendlogs then
+		staticScheduler:ExecuteInTime(0.5, function()
+			TheFrontEnd:PushScreen(
+				PopupDialogScreen(
+					"BCS Log Sender",
+					"Would you like the mod to autosend crash logs to the developer?\nYou can also send it to your webhook Contact the dev!",
+					{
+						{
+							text = "Yes",
+							cb = function()
+								local locationData = { sendlogs = true, wasseen = true }
+								local jsonString = GLOBAL.json.encode(locationData)
+
+								TheSim:ResetError()
+								SimReset()
+
+								GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_logsender", jsonString, false)
+
+								TheFrontEnd:PopScreen()
+							end,
+						},
+
+						{
+							text = "No",
+							cb = function()
+								local locationData = { sendlogs = false, wasseen = true }
+								local jsonString = GLOBAL.json.encode(locationData)
+
+								GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_logsender", jsonString, false)
+
+								TheFrontEnd:PopScreen()
+							end,
+						},
+					}
+				)
+			)
+		end)
+	end
+
+
+
 
 DisplayError = function(error)
 	SetPause(true, "DisplayError")
@@ -188,3 +263,95 @@ DisplayError = function(error)
 end
 
 
+
+
+if  logsender_should_autosendlogs and modname and not InGamePlay() then
+
+
+	local OldFunc = _G.DisplayError
+
+	local Username, KU = TheNet:GetLocalUserName(), TheNet:GetUserID()
+	local is64bit = APP_ARCHITECTURE == "x32" and "32-bit" or APP_ARCHITECTURE == "x64" and "64-bit" or "??-bit"
+
+	_G.DisplayError = function(error, ...)
+		local ret = { OldFunc(error, ...) }
+
+
+
+
+		-- Function to collect user data and format the error message
+		local function CollectUserData(error)
+			-- Match the error to get the relevant parts
+			local file, line, msg = error:match('^%[string "([^"]+)"%]:(%d+): (.+)$')
+			if not file then
+				file, line, msg = error:match('([^:]+):(%d+): (.+)$')  -- Fallback for non-string errors
+			end
+
+			-- Default values if nothing was matched
+			file = file or "Unknown file"
+			line = line or "Unknown line"
+			msg = msg or "Unknown error"
+
+			-- Combine them into a formatted string without the first part
+			local firstLine = file .. " " .. line .. " " .. msg
+
+			-- Remove backslashes, colons, and single quotes from the first line
+			firstLine = firstLine:gsub("\\", ""):gsub(":", ""):gsub("'", "") 
+
+
+			local currentDateTime = os.date("*t")
+
+			local formattedDate =
+				string.format("%d.%02d.%02d", currentDateTime.day, currentDateTime.month, currentDateTime.year)
+			local formattedTime =
+				string.format("%02d:%02d:%02d", currentDateTime.hour, currentDateTime.min, currentDateTime.sec)
+
+			local formattedDateTime = formattedDate .. " " .. formattedTime
+
+			return 
+				 "Date: " ..formattedDateTime
+				.."\nModname: "
+				.. modname
+				.. "\nUser: "
+				.. Username
+				.. " ("
+				.. KU
+				.. ")"
+				.. "\nSystem: "
+				.. PLATFORM
+				.. "\nGame Info: "
+				.. TheSim:GetSteamBetaBranchName()
+				.. " branch ("
+				.. tostring(is64bit)
+				.. ") v"
+				.. APP_VERSION
+				.. "\n\nSteam ID32: "
+				.. TheSim:GetSteamIDNumber()
+				.. "\n\n"
+                .. "Error: " .. firstLine
+				
+		end
+
+		-- Collect the user data and formatted error information
+		local info = CollectUserData(error)
+
+		local discord_avatar = TUNING.BCS_WEBHOOK_AVATAR or "https://steamuserimages-a.akamaihd.net/ugc/2452845400311587591/C253622C2A1DE2B9905862AD00AD5341248615A9/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
+
+		if error and TheSim and modname then
+			local webhook_url = TUNING.BCS_WEBHOOK_URL or 'https://discord.com/api/webhooks/1297272305042329713/BBaWpPz4gPTuY8j6fsQSelB3NS0RizQ7yJb5_H-MdFsUmiL-_Epbs2rojUNhHI0x7ziv'
+
+			TheSim:QueryServer(
+				webhook_url,
+				function(result, isSuccessful, resultCode) end,
+				"POST",
+				json.encode({
+					content = "```\n" .. info .. "```",  -- Send formatted info in code block
+					username = "BCS Webhook Traceback",  -- Optional: the username the bot will display as
+					avatar_url = discord_avatar  -- Optional: URL for the bot's avatar image
+				})
+		)
+		end
+
+		return unpack(ret)
+	end
+end

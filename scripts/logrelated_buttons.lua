@@ -317,7 +317,7 @@ AddClassPostConstruct(
 				self.createquick_log.text_shadow:SetHAlign(ANCHOR_LEFT)
 			else
 				CW_CreateTextFileCommand(text)
-				self.infotext:SetString(file .. " created.")
+				--self.infotext:SetString(file .. " created.")
 			end
 		end
 

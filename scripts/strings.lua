@@ -78,6 +78,11 @@ STRINGS.UI.MAINSCREEN.BETTERCRASHSCREEN = {
 
         TITLE_NORMALMODSDISABLED = "Mods estão desativados!",
         NORMALMODSDISABLED = "Seus mods estão desativados, você gostaria de reativá-los?",
+
+
+
+        SAVEPERISTENTMODS_SAVE = "Salvar Mods",
+        SAVEPERISTENTMODS_CLEAR = "Limpar mods salvos"
     },
 
     zh = {
