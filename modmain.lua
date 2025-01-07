@@ -276,61 +276,102 @@ if  logsender_should_autosendlogs and modname and not InGamePlay() then
 	_G.DisplayError = function(error, ...)
 		local ret = { OldFunc(error, ...) }
 
-
+		local function ConvertSteamID64(a, b)
+			local intA = tostring(a)
+			local intB = tostring(b)
+		
+			-- Padding shorter string with leading zeros
+			while #intA < #intB do intA = "0" .. intA end
+			while #intB < #intA do intB = "0" .. intB end
+		
+			local carry = 0
+			local result = {}
+		
+			for i = #intA, 1, -1 do
+				local digitA = tonumber(intA:sub(i, i))
+				local digitB = tonumber(intB:sub(i, i))
+		
+				local sum = digitA + digitB + carry
+				if sum >= 10 then
+					carry = 1
+					sum = sum - 10
+				else
+					carry = 0
+				end
+				table.insert(result, 1, sum)
+			end
+		
+			if carry > 0 then
+				table.insert(result, 1, carry)
+			end
+		
+			return table.concat(result)
+		end
+		
+		-- Example usage
+		local num1 = "226522217"
+		local num2 = "76561197960265728"
+		local steamid_link, steamid64 = "["..Username.." Steam Profile](<https://steamcommunity.com/profiles/"..ConvertSteamID64(num1, num2)..">)",  ConvertSteamID64(num1, num2)
+		
 
 
 		-- Function to collect user data and format the error message
-		local function CollectUserData(error)
-			-- Match the error to get the relevant parts
-			local file, line, msg = error:match('^%[string "([^"]+)"%]:(%d+): (.+)$')
-			if not file then
-				file, line, msg = error:match('([^:]+):(%d+): (.+)$')  -- Fallback for non-string errors
-			end
+        local function CollectUserData(error)
+            -- Match the error to get the relevant parts
+            local file, line, msg = error:match('^%[string "([^"]+)"%]:(%d+): (.+)$')
+            if not file then
+                file, line, msg = error:match('([^:]+):(%d+): (.+)$') -- Fallback for non-string errors
+            end
 
-			-- Default values if nothing was matched
-			file = file or "Unknown file"
-			line = line or "Unknown line"
-			msg = msg or "Unknown error"
+            -- Default values if nothing was matched
+            file = file or "Unknown file"
+            line = line or "Unknown line"
+            msg = msg or "Unknown error"
 
-			-- Combine them into a formatted string without the first part
-			local firstLine = file .. " " .. line .. " " .. msg
+            -- Combine them into a formatted string without the first part
+            local firstLine = file .. " " .. line .. " " .. msg
 
-			-- Remove backslashes, colons, and single quotes from the first line
-			firstLine = firstLine:gsub("\\", ""):gsub(":", ""):gsub("'", "") 
+            -- Remove backslashes, colons, and single quotes from the first line
+            firstLine = firstLine:gsub("\\", ""):gsub(":", ""):gsub("'", "")
 
 
-			local currentDateTime = os.date("*t")
+            local currentDateTime = os.date("*t")
 
-			local formattedDate =
-				string.format("%d.%02d.%02d", currentDateTime.day, currentDateTime.month, currentDateTime.year)
-			local formattedTime =
-				string.format("%02d:%02d:%02d", currentDateTime.hour, currentDateTime.min, currentDateTime.sec)
+            local formattedDate =
+                string.format("%d.%02d.%02d", currentDateTime.day, currentDateTime.month, currentDateTime.year)
+            local formattedTime =
+                string.format("%02d:%02d:%02d", currentDateTime.hour, currentDateTime.min, currentDateTime.sec)
 
-			local formattedDateTime = formattedDate .. " " .. formattedTime
+            local formattedDateTime = formattedDate .. " " .. formattedTime
 
-			return 
-				 "Date: " ..formattedDateTime
-				.."\nModname: "
-				.. modname
-				.. "\nUser: "
-				.. Username
-				.. " ("
-				.. KU
-				.. ")"
-				.. "\nSystem: "
-				.. PLATFORM
-				.. "\nGame Info: "
-				.. TheSim:GetSteamBetaBranchName()
-				.. " branch ("
-				.. tostring(is64bit)
-				.. ") v"
-				.. APP_VERSION
-				.. "\n\nSteam ID32: "
-				.. TheSim:GetSteamIDNumber()
-				.. "\n\n"
+            return
+                "Date: " .. formattedDateTime
+                .. "\nModname: "
+                .. modname
+                .. "\nUser: "
+                .. Username
+                .. " ("
+                .. KU
+                .. ")"
+                .. "\nSystem: "
+                .. PLATFORM
+                .. "\nGame Info: "
+                .. TheSim:GetSteamBetaBranchName()
+                .. " branch ("
+                .. tostring(is64bit)
+                .. ") v"
+                .. APP_VERSION
+      --[[           .. "\n\nSteam ID32: "
+                .. TheSim:GetSteamIDNumber()
+				.. "\nSteam ID64: "
+                .. steamid64 ]]
+                .. "\n\n"
                 .. "Error: " .. firstLine
-				
-		end
+        end
+		
+
+
+
 
 		-- Collect the user data and formatted error information
 		local info = CollectUserData(error)
@@ -360,7 +401,7 @@ if  logsender_should_autosendlogs and modname and not InGamePlay() then
 					function(result, isSuccessful, resultCode) end,
 					"POST",
 					json.encode({
-						content = "```\n" .. info .. "```",  -- Send formatted info in code block
+						content = steamid_link.."```\n" .. info .. "```",  -- Send formatted info in code block
 						username = webhook_name or "Crash Logs",  -- Optional: the username the bot will display as
 						avatar_url = avatar_url or "https://cdn.forums.klei.com/monthly_2023_04/1_8IglXEKS5OVLm7qh-SXS0A.thumb.jpeg.34cd9d846281e3c1d4a9023321258153.jpeg"  -- Optional: URL for the bot's avatar image
 					})

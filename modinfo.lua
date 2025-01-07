@@ -8,7 +8,7 @@ name = en_zh("Better Crash Screen","更好的崩溃提示")
 
 author = "Niko"
 
-version = "2.4.2"
+version = "2.4.3"
 
 config = true
 -- Language = "en"
