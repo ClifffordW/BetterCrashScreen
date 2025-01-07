@@ -335,21 +335,37 @@ if  logsender_should_autosendlogs and modname and not InGamePlay() then
 		-- Collect the user data and formatted error information
 		local info = CollectUserData(error)
 
-		local discord_avatar = TUNING.BCS_WEBHOOK_AVATAR or "https://steamuserimages-a.akamaihd.net/ugc/2452845400311587591/C253622C2A1DE2B9905862AD00AD5341248615A9/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
-
+		
 		if error and TheSim and modname then
-			local webhook_url = TUNING.BCS_WEBHOOK_URL or 'https://discord.com/api/webhooks/1297272305042329713/BBaWpPz4gPTuY8j6fsQSelB3NS0RizQ7yJb5_H-MdFsUmiL-_Epbs2rojUNhHI0x7ziv'
 
-			TheSim:QueryServer(
-				webhook_url,
-				function(result, isSuccessful, resultCode) end,
-				"POST",
-				json.encode({
-					content = "```\n" .. info .. "```",  -- Send formatted info in code block
-					username = "BCS Webhook Traceback",  -- Optional: the username the bot will display as
-					avatar_url = discord_avatar  -- Optional: URL for the bot's avatar image
-				})
-		)
+			if not TUNING.BCS_WEBHOOK then return end
+
+
+			local discord_avatars = {}
+			local webhook_urls = {}
+			local webhook_names = {}
+		
+			for _, webhook in pairs(TUNING.BCS_WEBHOOK) do
+				table.insert(webhook_urls, webhook.URL)
+				table.insert(discord_avatars, webhook.AVATAR)
+				table.insert(webhook_names, webhook.NAME)
+			end
+		
+			for i, webhook_url in ipairs(webhook_urls) do
+				local avatar_url = discord_avatars[i] or discord_avatars[1]
+				local webhook_name = webhook_names[i] or webhook_names[1]
+		
+				TheSim:QueryServer(
+					webhook_url,
+					function(result, isSuccessful, resultCode) end,
+					"POST",
+					json.encode({
+						content = "```\n" .. info .. "```",  -- Send formatted info in code block
+						username = webhook_name or "Crash Logs",  -- Optional: the username the bot will display as
+						avatar_url = avatar_url or "https://cdn.forums.klei.com/monthly_2023_04/1_8IglXEKS5OVLm7qh-SXS0A.thumb.jpeg.34cd9d846281e3c1d4a9023321258153.jpeg"  -- Optional: URL for the bot's avatar image
+					})
+				)
+			end
 		end
 
 		return unpack(ret)

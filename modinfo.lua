@@ -8,7 +8,7 @@ name = en_zh("Better Crash Screen","更好的崩溃提示")
 
 author = "Niko"
 
-version = "2.3.0"
+version = "2.4.2"
 
 config = true
 -- Language = "en"
@@ -318,15 +318,18 @@ end
 -- English translation
 [[󰀏 What's New:
 
-󰀈 Added Chinese translation
+󰀈 Removed Default URL webhook due to someone exploiting it.
+󰀈 Webhooks are now in tables instead.
 
 
 ]],
 
 -- Chinese translation
-[[󰀏 最近更新：
+[[󰀏 更新内容:
 
- 󰀈 新增中文翻译]])
+󰀈 由于有人利用默认URL webhook，因此已将其删除。
+󰀈 现在webhook在表中。
+]])
 
 	--copyright = "Copyright © 2020 "..old_author
 credits = en_zh("󰀭 Credits:","󰀭 致谢") .. " " .. contributors
