@@ -19,7 +19,8 @@ AddClassPostConstruct(
 
 		local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or BODYTEXTFONT
 
-		--text
+        --text
+		
 
 		self.infotext = self.root:AddChild(Text(sel_font, 35))
 		self.infotext:SetVAlign(ANCHOR_TOP)
@@ -33,7 +34,20 @@ AddClassPostConstruct(
 		self.infotext:EnableWordWrap(true)
 		self.infotext:SetRegionSize(480 * 2, 200)
 		self.infotext:MoveToFront()
-		self.infotext:SetColour(RGB(255, 199, 41, 1))
+        self.infotext:SetColour(RGB(255, 199, 41, 1))
+		
+
+
+
+
+	
+
+
+
+
+
+
+		
 
 		local TEXT_OFFSET = 100
 		local TEMPLATES_OLD, TEMPLATES = require("widgets/templates"), require("widgets/redux/templates")
@@ -109,7 +123,28 @@ AddClassPostConstruct(
 			end)
 		end
 
-		if GetModConfigData("ReduxCrashScreen") == "classic" then
+        if GetModConfigData("ReduxCrashScreen") == "classic" then
+			
+
+			self.infotext_webhook = self.root:AddChild(Text(sel_font, 35))
+			self.infotext_webhook:SetVAlign(ANCHOR_TOP)
+		
+			
+			if texthalign then
+				self.infotext_webhook:SetHAlign(ANCHOR_MIDDLE)
+			end
+		
+		
+			self.infotext_webhook:SetPosition(0, 150, 0)
+			self.infotext_webhook:SetString("")
+			self.infotext_webhook:EnableWordWrap(true)
+			self.infotext_webhook:SetRegionSize(480 * 2, 200)
+			self.infotext_webhook:MoveToFront()
+	
+			local infotext_webhook_bc = self.infotext_webhook
+			_G["ZEROTWO_INFOTEXT_WEBHOOK_BCS"] = infotext_webhook_bc
+
+
 			self.documents_shown = false
 
 			if GetModConfigData("DocumentsButton") == 1 then
@@ -169,7 +204,10 @@ AddClassPostConstruct(
 
 			----------------------------------------------------
 			self.workshopbutton.text:SetHAlign(ANCHOR_LEFT)
-			self.workshopbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
+            self.workshopbutton.text_shadow:SetHAlign(ANCHOR_LEFT)
+			
+
+
 
 			if not BETTERCRASHSCREEN_CAUSE then
 				self.workshopbutton:Hide()
@@ -203,7 +241,7 @@ AddClassPostConstruct(
 				self.createquick_log.text_shadow:SetHAlign(ANCHOR_LEFT)
 			else
 				CW_CreateTextFileCommand(text)
-				self.infotext:SetString(file .. " created.")
+				--self.infotext:SetString(file .. " created.")
 			end
 
 			----------------------------------------------------
@@ -212,21 +250,50 @@ AddClassPostConstruct(
 			local TEXT_OFFSET = 125
 			local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or HEADERFONT
 
-			--text
+            --text
+			
+			self.title:SetSize(50)
 
-			self.infotext = self.root:AddChild(Text(sel_font, 18))
+			self.infotext = self.root:AddChild(Text(sel_font, 30))
 			self.infotext:SetVAlign(ANCHOR_TOP)
 
 			if texthalign then
 				self.infotext:SetHAlign(ANCHOR_MIDDLE)
 			end
 
-			self.infotext:SetPosition(0, 200, 0)
+			self.infotext:SetPosition(0, 215, 0)
 			self.infotext:SetString("")
 			self.infotext:EnableWordWrap(true)
 			self.infotext:SetRegionSize(480 * 2, 200)
 			self.infotext:MoveToFront()
 			self.infotext:SetColour(RGB(255, 199, 41, 1))
+			
+
+
+			self.infotext_webhook = self.root:AddChild(Text(sel_font, 32))
+			self.infotext_webhook:SetVAlign(ANCHOR_TOP)
+		
+			self.infotext_webhook:SetHAlign(ANCHOR_MIDDLE)
+		
+
+			if GetModConfigData("SaveLog") == 1 and GetModConfigData("AutoSaveLog") == 0 then
+				self.infotext_webhook:SetPosition(0, 215, 0)
+			else
+				self.infotext_webhook:SetPosition(0, 125, 0)
+			end
+		
+			
+			self.infotext_webhook:SetString("")
+			self.infotext_webhook:EnableWordWrap(true)
+			self.infotext_webhook:SetRegionSize(480 * 2, 200)
+			self.infotext_webhook:MoveToFront()
+			
+			
+			
+			
+			
+			local infotext_webhook_bc = self.infotext_webhook
+			_G["ZEROTWO_INFOTEXT_WEBHOOK_BCS"] = infotext_webhook_bc
 
 			--Client log location button
 

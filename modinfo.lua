@@ -8,7 +8,7 @@ name = en_zh("Better Crash Screen","更好的崩溃提示")
 
 author = "Niko"
 
-version = "2.4.3"
+version = "2.5"
 
 config = true
 -- Language = "en"
@@ -141,9 +141,15 @@ if config == true then
 				{ description = en_zh("Default","默认"), data = 1.08 },
 				{ description = "1.15", data = 1.15 },
 				{ description = "1.25", data = 1.25 },
-				{ description = "1.4", data = 1.4 },
+                { description = "1.4", data = 1.4 },
+				{ description = "1.5", data = 1.5 },
+
+
+
+
+				
 			},
-			default = 1.4,
+			default = 1.5,
 		},
 
 		{
@@ -318,8 +324,11 @@ end
 -- English translation
 [[󰀏 What's New:
 
-󰀈 Removed Default URL webhook due to someone exploiting it.
-󰀈 Webhooks are now in tables instead.
+󰀈 Addressed Issue with Classic Crash Screen
+󰀈 Added more scale options for redux crash screen
+󰀈 Added text for when the log gets auto-sent to the webhook
+󰀈 Adjusted Redux Crash Screen font size
+
 
 
 ]],
@@ -327,8 +336,13 @@ end
 -- Chinese translation
 [[󰀏 更新内容:
 
-󰀈 由于有人利用默认URL webhook，因此已将其删除。
-󰀈 现在webhook在表中。
+󰀈 解决了经典崩溃屏幕的问题
+󰀈 为 Redux 崩溃屏幕添加了更多比例选项
+󰀈 添加了日志自动发送到 webhook 时的文本
+󰀈 调整了 Redux 崩溃屏幕的字体大小
+
+
+
 ]])
 
 	--copyright = "Copyright © 2020 "..old_author

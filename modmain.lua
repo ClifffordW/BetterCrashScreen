@@ -9,6 +9,21 @@ Assets = {
 
 }
 
+function HexToRGB(hex, alpha)
+    -- Remove the hash (#) if present
+    hex = hex:gsub("#", "")
+    
+    -- Extract the red, green, and blue components
+    local r = tonumber(hex:sub(1, 2), 16) / 255
+    local g = tonumber(hex:sub(3, 4), 16) / 255
+    local b = tonumber(hex:sub(5, 6), 16) / 255
+    
+    -- Default alpha to 1 if not provided
+    alpha = alpha or 1
+    
+    -- Return the result in the format expected by SetColour
+    return r, g, b, alpha
+end
 
 
 
@@ -265,7 +280,9 @@ end
 
 
 
-if  logsender_should_autosendlogs and modname and not InGamePlay() then
+
+
+if  logsender_should_autosendlogs and modname then
 
 
 	local OldFunc = _G.DisplayError
@@ -376,10 +393,21 @@ if  logsender_should_autosendlogs and modname and not InGamePlay() then
 		-- Collect the user data and formatted error information
 		local info = CollectUserData(error)
 
+		local TEXT_OFFSET = 125
+		local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or HEADERFONT
+
+		--text
+
+	
+
+
 		
 		if error and TheSim and modname then
 
 			if not TUNING.BCS_WEBHOOK then return end
+
+			local webhook_text = require("widgets/scripterrorwidget")
+
 
 
 			local discord_avatars = {}
@@ -398,7 +426,23 @@ if  logsender_should_autosendlogs and modname and not InGamePlay() then
 		
 				TheSim:QueryServer(
 					webhook_url,
-					function(result, isSuccessful, resultCode) end,
+					function(result, isSuccessful, resultCode)
+
+                        if ZEROTWO_INFOTEXT_WEBHOOK_BCS then
+                            if isSuccessful then
+                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Successfully sent error to webhook")
+                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#08CE0B", 1))
+                            else
+                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Failed to send error to webhook")
+                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#E00909", 1))
+                            end
+                        end
+
+						
+
+						
+
+					 end,
 					"POST",
 					json.encode({
 						content = steamid_link.."```\n" .. info .. "```",  -- Send formatted info in code block
