@@ -5,33 +5,27 @@ Assets = {
 
 	Asset("ATLAS", "images/tutorial.xml"),
 	Asset("IMAGE", "images/tutorial.tex"),
-
-
 }
 
 function HexToRGB(hex, alpha)
-    -- Remove the hash (#) if present
-    hex = hex:gsub("#", "")
-    
-    -- Extract the red, green, and blue components
-    local r = tonumber(hex:sub(1, 2), 16) / 255
-    local g = tonumber(hex:sub(3, 4), 16) / 255
-    local b = tonumber(hex:sub(5, 6), 16) / 255
-    
-    -- Default alpha to 1 if not provided
-    alpha = alpha or 1
-    
-    -- Return the result in the format expected by SetColour
-    return r, g, b, alpha
+	-- Remove the hash (#) if present
+	hex = hex:gsub("#", "")
+
+	-- Extract the red, green, and blue components
+	local r = tonumber(hex:sub(1, 2), 16) / 255
+	local g = tonumber(hex:sub(3, 4), 16) / 255
+	local b = tonumber(hex:sub(5, 6), 16) / 255
+
+	-- Default alpha to 1 if not provided
+	alpha = alpha or 1
+
+	-- Return the result in the format expected by SetColour
+	return r, g, b, alpha
 end
-
-
-
 
 --print("FONT IS " .. GetModConfigData("font"))
 
 modimport("scripts/strings")
-
 
 modimport("scripts/autoenable")
 
@@ -47,83 +41,73 @@ modimport("scripts/smallbonus")
 modimport("scripts/bcs_tutorial")
 
 do
-    local GLOBAL = GLOBAL
-    local modEnv = GLOBAL.getfenv(1)
-    local rawget, setmetatable = GLOBAL.rawget, GLOBAL.setmetatable
-    setmetatable(modEnv, {
-        __index = function(self, index)
-            return rawget(GLOBAL, index)
-        end,
-        -- lack of __newindex means it defaults to modEnv, so we don't mess up globals.
-    })
+	local GLOBAL = GLOBAL
+	local modEnv = GLOBAL.getfenv(1)
+	local rawget, setmetatable = GLOBAL.rawget, GLOBAL.setmetatable
+	setmetatable(modEnv, {
+		__index = function(self, index)
+			return rawget(GLOBAL, index)
+		end,
+		-- lack of __newindex means it defaults to modEnv, so we don't mess up globals.
+	})
 
-    _G = GLOBAL
+	_G = GLOBAL
 end
-
-
 
 local logsender_seen_autosendlogs
 local logsender_should_autosendlogs
 
-	TheSim:GetPersistentString("BetterCrashScreen_logsender", function(load_success, data)
-		if load_success and data ~= nil then
-			local status, bcs_data_logsender
-			= GLOBAL.pcall(function()
-				return GLOBAL.json.decode(data)
-			end)
-			if status and bcs_data_logsender then
-				logsender_should_autosendlogs = bcs_data_logsender.sendlogs
-				logsender_seen_autosendlogs = bcs_data_logsender.wasseen
-
-			end
-		end
-	end)
-
-
-
-	local PopupDialogScreen = require("screens/redux/popupdialog")
-
-	if not logsender_seen_autosendlogs then
-		staticScheduler:ExecuteInTime(0.5, function()
-			TheFrontEnd:PushScreen(
-				PopupDialogScreen(
-					"BCS Log Sender",
-					"Would you like the mod to autosend crash logs to the developer?\nYou can also send it to your webhook Contact the dev!",
-					{
-						{
-							text = "Yes",
-							cb = function()
-								local locationData = { sendlogs = true, wasseen = true }
-								local jsonString = GLOBAL.json.encode(locationData)
-
-								TheSim:ResetError()
-								SimReset()
-
-								GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_logsender", jsonString, false)
-
-								TheFrontEnd:PopScreen()
-							end,
-						},
-
-						{
-							text = "No",
-							cb = function()
-								local locationData = { sendlogs = false, wasseen = true }
-								local jsonString = GLOBAL.json.encode(locationData)
-
-								GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_logsender", jsonString, false)
-
-								TheFrontEnd:PopScreen()
-							end,
-						},
-					}
-				)
-			)
+TheSim:GetPersistentString("BetterCrashScreen_logsender", function(load_success, data)
+	if load_success and data ~= nil then
+		local status, bcs_data_logsender = GLOBAL.pcall(function()
+			return GLOBAL.json.decode(data)
 		end)
+		if status and bcs_data_logsender then
+			logsender_should_autosendlogs = bcs_data_logsender.sendlogs
+			logsender_seen_autosendlogs = bcs_data_logsender.wasseen
+		end
 	end
+end)
 
+local PopupDialogScreen = require("screens/redux/popupdialog")
 
+if not logsender_seen_autosendlogs then
+	staticScheduler:ExecuteInTime(0.5, function()
+		TheFrontEnd:PushScreen(
+			PopupDialogScreen(
+				"BCS Log Sender",
+				"Would you like the mod to autosend crash logs to the developer?\nYou can also send it to your webhook Contact the dev!",
+				{
+					{
+						text = "Yes",
+						cb = function()
+							local locationData = { sendlogs = true, wasseen = true }
+							local jsonString = GLOBAL.json.encode(locationData)
 
+							SimReset()
+
+							GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_logsender", jsonString, false)
+
+							TheFrontEnd:PopScreen()
+						end,
+					},
+
+					{
+						text = "No",
+						cb = function()
+							local locationData = { sendlogs = false, wasseen = true }
+							local jsonString = GLOBAL.json.encode(locationData)
+
+							GLOBAL.TheSim:SetPersistentString("BetterCrashScreen_logsender", jsonString, false)
+
+							TheFrontEnd:PopScreen()
+						end,
+					},
+				}
+			)
+		)
+	end)
+end
 
 DisplayError = function(error)
 	SetPause(true, "DisplayError")
@@ -277,14 +261,7 @@ DisplayError = function(error)
 	SetGlobalErrorWidget(titlestr, error, buttons, ANCHOR_LEFT, modstext, 20)
 end
 
-
-
-
-
-
-if  logsender_should_autosendlogs and modname then
-
-
+if logsender_should_autosendlogs and modname then
 	local OldFunc = _G.DisplayError
 
 	local Username, KU = TheNet:GetLocalUserName(), TheNet:GetUserID()
@@ -296,18 +273,22 @@ if  logsender_should_autosendlogs and modname then
 		local function ConvertSteamID64(a, b)
 			local intA = tostring(a)
 			local intB = tostring(b)
-		
+
 			-- Padding shorter string with leading zeros
-			while #intA < #intB do intA = "0" .. intA end
-			while #intB < #intA do intB = "0" .. intB end
-		
+			while #intA < #intB do
+				intA = "0" .. intA
+			end
+			while #intB < #intA do
+				intB = "0" .. intB
+			end
+
 			local carry = 0
 			local result = {}
-		
+
 			for i = #intA, 1, -1 do
 				local digitA = tonumber(intA:sub(i, i))
 				local digitB = tonumber(intB:sub(i, i))
-		
+
 				local sum = digitA + digitB + carry
 				if sum >= 10 then
 					carry = 1
@@ -317,137 +298,136 @@ if  logsender_should_autosendlogs and modname then
 				end
 				table.insert(result, 1, sum)
 			end
-		
+
 			if carry > 0 then
 				table.insert(result, 1, carry)
 			end
-		
+
 			return table.concat(result)
 		end
-		
-		-- Example usage
-		local num1 = "226522217"
-		local num2 = "76561197960265728"
-		local steamid_link, steamid64 = "["..Username.." Steam Profile](<https://steamcommunity.com/profiles/"..ConvertSteamID64(num1, num2)..">)",  ConvertSteamID64(num1, num2)
-		
 
+		-- Example usage
+		local num1 = TheSim:GetSteamIDNumber()
+		local num2 = "76561197960265728"
+		local steamid_link, steamid64 =
+			"["
+				.. Username
+				.. " Steam Profile](<https://steamcommunity.com/profiles/"
+				.. ConvertSteamID64(num1, num2)
+				.. ">)",
+			ConvertSteamID64(num1, num2)
 
 		-- Function to collect user data and format the error message
-        local function CollectUserData(error)
-            -- Match the error to get the relevant parts
-            local file, line, msg = error:match('^%[string "([^"]+)"%]:(%d+): (.+)$')
-            if not file then
-                file, line, msg = error:match('([^:]+):(%d+): (.+)$') -- Fallback for non-string errors
-            end
+		local function CollectUserData(error)
+			-- Match the error to get the relevant parts
+			local file, line, msg = error:match('^%[string "([^"]+)"%]:(%d+): (.+)$')
+			if not file then
+				file, line, msg = error:match("([^:]+):(%d+): (.+)$") -- Fallback for non-string errors
+			end
 
-            -- Default values if nothing was matched
-            file = file or "Unknown file"
-            line = line or "Unknown line"
-            msg = msg or "Unknown error"
+			-- Default values if nothing was matched
+			file = file or "Unknown file"
+			line = line or "Unknown line"
+			msg = msg or "Unknown error"
 
-            -- Combine them into a formatted string without the first part
-            local firstLine = file .. " " .. line .. " " .. msg
+			-- Combine them into a formatted string without the first part
+			local firstLine = file .. " " .. line .. " " .. msg
 
-            -- Remove backslashes, colons, and single quotes from the first line
-            firstLine = firstLine:gsub("\\", ""):gsub(":", ""):gsub("'", "")
+			-- Remove backslashes, colons, and single quotes from the first line
+			firstLine = firstLine:gsub("\\", ""):gsub(":", ""):gsub("'", "")
 
+			local currentDateTime = os.date("*t")
 
-            local currentDateTime = os.date("*t")
+			local formattedDate =
+				string.format("%d.%02d.%02d", currentDateTime.day, currentDateTime.month, currentDateTime.year)
+			local formattedTime =
+				string.format("%02d:%02d:%02d", currentDateTime.hour, currentDateTime.min, currentDateTime.sec)
 
-            local formattedDate =
-                string.format("%d.%02d.%02d", currentDateTime.day, currentDateTime.month, currentDateTime.year)
-            local formattedTime =
-                string.format("%02d:%02d:%02d", currentDateTime.hour, currentDateTime.min, currentDateTime.sec)
+			local formattedDateTime = formattedDate .. " " .. formattedTime
 
-            local formattedDateTime = formattedDate .. " " .. formattedTime
-
-            return
-                "Date: " .. formattedDateTime
-                .. "\nModname: "
-                .. modname
-                .. "\nUser: "
-                .. Username
-                .. " ("
-                .. KU
-                .. ")"
-                .. "\nSystem: "
-                .. PLATFORM
-                .. "\nGame Info: "
-                .. TheSim:GetSteamBetaBranchName()
-                .. " branch ("
-                .. tostring(is64bit)
-                .. ") v"
-                .. APP_VERSION
-      --[[           .. "\n\nSteam ID32: "
+			return "Date: "
+				.. formattedDateTime
+				.. "\nModname: "
+				.. modname
+				.. "\nUser: "
+				.. Username
+				.. " ("
+				.. KU
+				.. ")"
+				.. "\nSystem: "
+				.. PLATFORM
+				.. "\nGame Info: "
+				.. TheSim:GetSteamBetaBranchName()
+				.. " branch ("
+				.. tostring(is64bit)
+				.. ") v"
+				.. APP_VERSION
+				--[[           .. "\n\nSteam ID32: "
                 .. TheSim:GetSteamIDNumber()
 				.. "\nSteam ID64: "
                 .. steamid64 ]]
-                .. "\n\n"
-                .. "Error: " .. firstLine
-        end
-		
-
-
-
+				.. "\n\n"
+				.. "Error: "
+				.. firstLine
+		end
 
 		-- Collect the user data and formatted error information
 		local info = CollectUserData(error)
 
 		local TEXT_OFFSET = 125
-		local sel_font = (GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number") and GetModConfigData("font") or HEADERFONT
+		local sel_font = (
+			GetModConfigData("bettercrashscreen_fonts") == 1 and type(GetModConfigData("font")) ~= "number"
+		)
+				and GetModConfigData("font")
+			or HEADERFONT
 
 		--text
 
-	
+        if error and TheSim and modname then
+			
 
-
-		
-		if error and TheSim and modname then
-
-			if not TUNING.BCS_WEBHOOK then return end
+			if not _G.ZEROTWO_BCS_WEBHOOK then
+				return
+			end
 
 			local webhook_text = require("widgets/scripterrorwidget")
-
-
 
 			local discord_avatars = {}
 			local webhook_urls = {}
 			local webhook_names = {}
-		
-			for _, webhook in pairs(TUNING.BCS_WEBHOOK) do
+
+			for _, webhook in pairs(_G.ZEROTWO_BCS_WEBHOOK) do
 				table.insert(webhook_urls, webhook.URL)
 				table.insert(discord_avatars, webhook.AVATAR)
 				table.insert(webhook_names, webhook.NAME)
 			end
-		
+
 			for i, webhook_url in ipairs(webhook_urls) do
 				local avatar_url = discord_avatars[i] or discord_avatars[1]
 				local webhook_name = webhook_names[i] or webhook_names[1]
-		
+
 				TheSim:QueryServer(
 					webhook_url,
 					function(result, isSuccessful, resultCode)
+						--204 success
 
-                        if ZEROTWO_INFOTEXT_WEBHOOK_BCS then
-                            if isSuccessful then
-                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Successfully sent error to webhook")
-                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#08CE0B", 1))
-                            else
-                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Failed to send error to webhook")
-                                ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#E00909", 1))
-                            end
-                        end
-
-						
-
-						
-
-					 end,
+						--401 fail
+						if ZEROTWO_INFOTEXT_WEBHOOK_BCS then
+							if isSuccessful and resultCode == 204 then
+								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Successfully sent error to webhook")
+								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#08CE0B", 1))
+							else
+								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Failed to send error to webhook")
+								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#E00909", 1))
+							end
+						end
+					end,
 					"POST",
 					json.encode({
-						content = steamid_link.."```\n" .. info .. "```",  -- Send formatted info in code block
-						username = webhook_name or "Crash Logs",  -- Optional: the username the bot will display as
-						avatar_url = avatar_url or "https://cdn.forums.klei.com/monthly_2023_04/1_8IglXEKS5OVLm7qh-SXS0A.thumb.jpeg.34cd9d846281e3c1d4a9023321258153.jpeg"  -- Optional: URL for the bot's avatar image
+						content = steamid_link .. "```\n" .. info .. "```", -- Send formatted info in code block
+						username = webhook_name or "Crash Logs", -- Optional: the username the bot will display as
+						avatar_url = avatar_url
+							or "https://cdn.forums.klei.com/monthly_2023_04/1_8IglXEKS5OVLm7qh-SXS0A.thumb.jpeg.34cd9d846281e3c1d4a9023321258153.jpeg", -- Optional: URL for the bot's avatar image
 					})
 				)
 			end
