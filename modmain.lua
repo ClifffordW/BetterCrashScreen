@@ -261,7 +261,13 @@ DisplayError = function(error)
 	SetGlobalErrorWidget(titlestr, error, buttons, ANCHOR_LEFT, modstext, 20)
 end
 
+
+
+
 if logsender_should_autosendlogs and modname then
+
+
+
 	local OldFunc = _G.DisplayError
 
 	local Username, KU = TheNet:GetLocalUserName(), TheNet:GetUserID()
@@ -269,6 +275,9 @@ if logsender_should_autosendlogs and modname then
 
 	_G.DisplayError = function(error, ...)
 		local ret = { OldFunc(error, ...) }
+
+
+		
 
 		local function ConvertSteamID64(a, b)
 			local intA = tostring(a)
@@ -324,18 +333,19 @@ if logsender_should_autosendlogs and modname then
 			if not file then
 				file, line, msg = error:match("([^:]+):(%d+): (.+)$") -- Fallback for non-string errors
 			end
-
+			
 			-- Default values if nothing was matched
 			file = file or "Unknown file"
 			line = line or "Unknown line"
 			msg = msg or "Unknown error"
-
+			
 			-- Combine them into a formatted string without the first part
-			local firstLine = file .. " " .. line .. " " .. msg
-
-			-- Remove backslashes, colons, and single quotes from the first line
-			firstLine = firstLine:gsub("\\", ""):gsub(":", ""):gsub("'", "")
-
+			local firstLine = string.format('[string "%s"]:%s: %s', file, line, msg)
+			
+			-- Removing unnecessary characters from the first line
+			firstLine = firstLine:gsub("\\", ""):gsub("'", "")
+			
+			
 			local currentDateTime = os.date("*t")
 
 			local formattedDate =
@@ -347,27 +357,26 @@ if logsender_should_autosendlogs and modname then
 
 			return "Date: "
 				.. formattedDateTime
-				.. "\nModname: "
-				.. modname
+--[[ 				.. "\nModname: "
+				.. modname ]]
 				.. "\nUser: "
 				.. Username
 				.. " ("
 				.. KU
-				.. ")"
+				.. ")\n"
 				.. "\nSystem: "
 				.. PLATFORM
-				.. "\nGame Info: "
+				.. "\nBranch: "
 				.. TheSim:GetSteamBetaBranchName()
-				.. " branch ("
-				.. tostring(is64bit)
-				.. ") v"
+				.. "\n"
+				.. "Executable Type: "..tostring(is64bit)
+				.. "\n".."Version: Release v"
 				.. APP_VERSION
 				--[[           .. "\n\nSteam ID32: "
                 .. TheSim:GetSteamIDNumber()
 				.. "\nSteam ID64: "
                 .. steamid64 ]]
 				.. "\n\n"
-				.. "Error: "
 				.. firstLine
 		end
 
@@ -410,7 +419,7 @@ if logsender_should_autosendlogs and modname then
 					webhook_url,
 					function(result, isSuccessful, resultCode)
 						--204 success
-
+						print("RESULT CODE "..resultCode)
 						--401 fail
 						if ZEROTWO_INFOTEXT_WEBHOOK_BCS then
 							if isSuccessful and resultCode == 204 then
@@ -424,7 +433,7 @@ if logsender_should_autosendlogs and modname then
 					end,
 					"POST",
 					json.encode({
-						content = steamid_link .. "```\n" .. info .. "```", -- Send formatted info in code block
+						content = steamid_link .. "```lua\n" .. info .. "```", -- Send formatted info in code block
 						username = webhook_name or "Crash Logs", -- Optional: the username the bot will display as
 						avatar_url = avatar_url
 							or "https://cdn.forums.klei.com/monthly_2023_04/1_8IglXEKS5OVLm7qh-SXS0A.thumb.jpeg.34cd9d846281e3c1d4a9023321258153.jpeg", -- Optional: URL for the bot's avatar image

@@ -435,13 +435,13 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen", function(self, ...)
 
 			self.inst:DoTaskInTime(25, function() end)
 
-			self.inst:DoTaskInTime(153, function()
+			self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 153 or 110.2 , function()
 				self.help_arrow:Hide()
 				TheFrontEnd:Fade(FADE_IN, 2)
 				_sound:SetVolume("FEMusic", 1)
 			end)
 
-			self.inst:DoTaskInTime(153.25, function()
+			self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 159.25 or 116.2 , function()
 				self.help_arrow:Kill()
 				crashbg:Kill()
 

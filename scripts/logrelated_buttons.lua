@@ -12,6 +12,7 @@ do
 	_G = GLOBAL
 end
 
+local ZEROTWO_INFOTEXT_WEBHOOK_BCS
 AddClassPostConstruct(
 	"widgets/scripterrorwidget",
 	function(self, title, text, buttons, texthalign, additionaltext, textsize, timeout, error, ...)
@@ -141,9 +142,9 @@ AddClassPostConstruct(
 			self.infotext_webhook:SetRegionSize(480 * 2, 200)
 			self.infotext_webhook:MoveToFront()
 	
-			local infotext_webhook_bc = self.infotext_webhook
-			_G["ZEROTWO_INFOTEXT_WEBHOOK_BCS"] = infotext_webhook_bc
+			_G.ZEROTWO_INFOTEXT_WEBHOOK_BCS = self.infotext_webhook
 
+			
 
 			self.documents_shown = false
 
@@ -292,8 +293,7 @@ AddClassPostConstruct(
 			
 			
 			
-			local infotext_webhook_bc = self.infotext_webhook
-			_G["ZEROTWO_INFOTEXT_WEBHOOK_BCS"] = infotext_webhook_bc
+			_G.ZEROTWO_INFOTEXT_WEBHOOK_BCS = self.infotext_webhook
 
 			--Client log location button
 

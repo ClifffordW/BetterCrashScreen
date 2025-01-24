@@ -8,7 +8,7 @@ name = en_zh("Better Crash Screen","更好的崩溃提示")
 
 author = "Niko"
 
-version = "2.5.4"
+version = "2.5.6"
 
 config = true
 -- Language = "en"
@@ -93,8 +93,9 @@ if config == true then
 			options = {
 				{ description = en_zh("Top Left","左上角"), data = 1 },
 				{ description = en_zh("Next to Apply","\"应用\"按钮的左边"), data = 0 },
+				{ description = en_zh("Attach to Buttons","\"应用\"按钮的左边"), data = 2 },
 			},
-			default = 0,
+			default = 2,
 		},
 
 		Title(en_zh("Language","语言"), en_zh("Pick langauge","选择语言")),
@@ -324,10 +325,8 @@ end
 -- English translation
 [[󰀏 What's New:
 
-󰀈 Addressed Issue with Classic Crash Screen
-󰀈 Added more scale options for redux crash screen
-󰀈 Added text for when the log gets auto-sent to the webhook
-󰀈 Adjusted Redux Crash Screen font size
+󰀈 Changed default save button position
+
 
 
 
@@ -336,10 +335,8 @@ end
 -- Chinese translation
 [[󰀏 更新内容:
 
-󰀈 解决了经典崩溃屏幕的问题
-󰀈 为 Redux 崩溃屏幕添加了更多比例选项
-󰀈 添加了日志自动发送到 webhook 时的文本
-󰀈 调整了 Redux 崩溃屏幕的字体大小
+󰀈 
+
 
 
 
