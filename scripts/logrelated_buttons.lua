@@ -142,7 +142,7 @@ AddClassPostConstruct(
 			self.infotext_webhook:SetRegionSize(480 * 2, 200)
 			self.infotext_webhook:MoveToFront()
 	
-			_G.ZEROTWO_INFOTEXT_WEBHOOK_BCS = self.infotext_webhook
+			--_G.ZEROTWO_INFOTEXT_WEBHOOK_BCS = self.infotext_webhook
 
 			
 
@@ -293,7 +293,7 @@ AddClassPostConstruct(
 			
 			
 			
-			_G.ZEROTWO_INFOTEXT_WEBHOOK_BCS = self.infotext_webhook
+			--_G.ZEROTWO_INFOTEXT_WEBHOOK_BCS = self.infotext_webhook
 
 			--Client log location button
 

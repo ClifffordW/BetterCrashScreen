@@ -421,7 +421,7 @@ if logsender_should_autosendlogs and modname then
 						--204 success
 						print("RESULT CODE "..resultCode)
 						--401 fail
-						if ZEROTWO_INFOTEXT_WEBHOOK_BCS then
+--[[ 						if ZEROTWO_INFOTEXT_WEBHOOK_BCS then
 							if isSuccessful and resultCode == 204 then
 								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Successfully sent error to webhook")
 								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#08CE0B", 1))
@@ -429,7 +429,7 @@ if logsender_should_autosendlogs and modname then
 								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetString("Failed to send error to webhook")
 								ZEROTWO_INFOTEXT_WEBHOOK_BCS:SetColour(HexToRGB("#E00909", 1))
 							end
-						end
+						end ]]
 					end,
 					"POST",
 					json.encode({
