@@ -227,6 +227,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen", function(self, ...)
 	end)
 
 	if not self.bettercrashscr_seentutorial then
+		TheFrontEnd.overlayroot.allowed_totalk = false
 		self.crashbg = self.fixed_root:AddChild(
 			Image("images/tutorial.xml", "tutorial_" .. TUNING.BETTECRASHSCREEN_LANGUAGE .. ".tex")
 		)
@@ -444,6 +445,7 @@ AddClassPostConstruct("screens/redux/multiplayermainscreen", function(self, ...)
 			self.inst:DoTaskInTime(TUNING.BETTECRASHSCREEN_LANGUAGE == "pt" and 159.25 or 116.2 , function()
 				self.help_arrow:Kill()
 				crashbg:Kill()
+				TheFrontEnd.overlayroot.allowed_totalk = true
 
 				if self.skipbutton then
 					self.skipbutton:Kill()
